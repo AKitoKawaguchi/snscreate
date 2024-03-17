@@ -1,0 +1,110 @@
+<div class="main users-maypage">
+  <div class="mypage">
+    <div class="mypage-section1">
+      <div class="user-image">
+        <%=image_tag("/user_images/#{@user.image_name}")%>
+      </div>
+      <div class="mypage-wrap">
+        <p><%=@user.name%></p>
+        <% if @current_user.id != @user.id%>
+          <% if Fav.find_by(follow:@current_user.id,follower:@user.id) %>
+            <%=link_to("フォロー解除","/favs/#{@user.id}/unfollow",data:{turbo_method: :post})%>
+          <% else %>
+            <%=link_to("フォロー","/favs/#{@user.id}/follow",data:{turbo_method: :post})%>
+          <% end %>
+        <% end %>
+        <p>フォロー<%=@follow.count%></p>
+        <p>フォロワー<%=@follower.count%></p>
+      </div>
+      <%=link_to "/users/#{@user.id}/edit" do%>
+        <span class="fa-solid fa-gear fa-lg"></span>
+      <% end %>
+    </div>
+    <div class="mypage-section2">
+      <p><%=@user.profile%></p>
+    </div>
+    <div class="mypage-section3">
+    <div class="choice">
+      <div class="posts-mypage-item-post">
+        投稿
+      </div>
+      <div class="posts-mypage-item-reply">
+        返信
+      </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="overflow-post">
+      <% @user.posts.each do |post|%>
+      <% if post.like %>
+      <div class="posts-mypage-post">
+          <%=link_to(post.content,"/main/#{post.id}")%>
+          <div class="star">
+            <% integer = post.like.floor%>
+            <% integer.times do |i|%>
+                <span class="fa-solid fa-star"></span>
+            <% end %>
+            <% unless post.like - integer == 0 %>
+                <span class="fa-solid fa-star-half"></span>
+            <% end %>
+          </div>
+      </div>
+      <% end %>
+      <% end %>
+    </div>
+    <div class="overflow-reply">
+      <% @comments.each do |comment|%>
+        <% unless comment.like %>
+        <div class="posts-mypage-reply">
+          <%=comment.content%>
+        </div>
+        <% end %>
+      <% end %>
+    </div>
+    </div>
+    <div class="mypage-section4">
+    <p>いいねした投稿</p>
+    <div class="overflow-fav">
+    <% @likes.each do |like|%>
+        <div class="posts-mypage-like">
+          <%=link_to(like.post.user.name,"/users/#{like.post.user.id}")%>
+          <%=link_to(like.post.content,"/main/#{like.post.id}")%>
+          <div class="star">
+            <% integer = like.post.like.floor %>
+            <% integer.times do |i|%>
+                <span class="fa-solid fa-star"></span>
+            <% end %>
+            <% unless like.post.like - integer == 0 %>
+                <span class="fa-solid fa-star-half"></span>
+            <% end %>
+          </div> 
+        </div>
+    <% end %>
+    </div>
+    </div>
+      <div class="mypage-make">
+        <%=link_to "/main/new" do%>
+          <span class="fa-regular fa-square-plus fa-2x"></span>
+        <% end %>
+      </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+      $(".overflow-reply").addClass("none");
+      $(".posts-mypage-item-post").addClass("white");
+      $(".posts-mypage-item-reply").on("click",function(){
+        $(this).addClass("white");
+        $(".overflow-reply").removeClass("none");
+        $(".overflow-post").addClass("none");
+        $(".posts-mypage-item-post").removeClass("white");
+      });
+      $(".posts-mypage-item-post").on("click",function(){
+        $(this).addClass("white");
+        $(".overflow-post").removeClass("none");
+        $(".overflow-reply").addClass("none");
+        $(".posts-mypage-item-reply").removeClass("white");
+      });
+    })
+</script>

@@ -1,0 +1,23 @@
+<div class="main main-comment">
+  <h3>返信を送信</h3>
+    <div class="post-item">
+      <div class="comment-username">
+        <%=@post.user.name%>
+      </div>
+      <% integer = @post.like.floor%>
+      <div class="comment-star">
+      <% integer.times do |i|%>
+        <span class="fa-solid fa-star"></span>
+      <% end %>
+      <% unless @post.like - integer == 0 %>
+        <span class="fa-solid fa-star-half"></span>
+      <% end %>
+      </div>
+      <%=@post.content%>
+    </div>
+    <span class="fa-solid fa-arrow-down-long fa-3x"></span>
+    <%=form_tag("/main/#{@post.id}/reply") do %>
+      <textarea name="comment" class="post-comment-item"></textarea>
+      <input type="submit" value="送信"></input>
+    <% end %>
+</div>

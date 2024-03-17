@@ -1,0 +1,26 @@
+<div class="main main-usersearch">
+  <% if @perfectusers %>
+  <% @perfectusers.each do |user| %>
+    <div class="search-user">
+    <%=user.name%>
+    </div>
+  <% end %>
+  <% end %>
+  <% if @particalusers %>
+  <% @particalusers.each do |user| %>
+    <div class="search-user">
+    <%=user.name%>
+    </div>
+  <% end %>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+      $(".search-user").hover(function(){
+        $(this).addClass("gray");
+      },function(){
+        $(this).removeClass("gray");
+      });
+    });
+</script>

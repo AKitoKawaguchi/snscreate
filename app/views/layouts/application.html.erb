@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BookApp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", media:"all", "data-turbo-track": "reload" %>
+    <link href="https://use.fontawesome.com/releases/v6.5.1/css/all.css" rel="stylesheet">
+    <%= javascript_importmap_tags %>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  </head>
+  <header>
+  <div class="header-logo">
+    <%if session[:user_id]%>
+      <%= link_to("SaunaApp","/users/#{@current_user.id}")%>
+    <% else %>
+    <%=link_to("SaunaApp","/login")%>
+    <% end %>
+  </div>
+  <% if @current_user %>
+  <ul class="header-menus">
+    <li>
+    <%=link_to("投稿一覧","/main/index")%>
+    </li>
+    <li>
+    <%=link_to("マイページ","/users/#{@current_user.id}")%>
+    </li>
+    <li>
+    <%=link_to("ログアウト","/logout",data:{turbo_method: :post})%>
+    </li>
+  </ul>
+  <% else %>
+  <ul class="header-menus">
+    <li>
+    <%=link_to("新規登録","/signup")%>
+    </li>
+    <li>
+    <%=link_to("ログイン","/login")%>
+    </li>
+  </ul>
+  <% end %>
+  </header>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<div class="main users-login">
+    <div class="container">
+      <div class="login">Login</div>
+      <% if @error_message%>
+       <div class="error_message">
+          <%= @error_message%>
+       </div>
+       <% end %>
+        <div class="login-form">
+          <%=form_tag("/login") do%>
+            <p>ユーザ名</p>
+            <input name="name" value="<%=@name%>">
+            <p>メールアドレス</p>
+            <input name="email" value="<%=@email%>">
+            <p>パスワード(6文字以上12文字以下の英数字)</p>
+            <input name="password" value="<%=@password%>">
+            <input type="submit" value="ログイン">
+          <% end %>
+        </div>
+    </div>
+</div>

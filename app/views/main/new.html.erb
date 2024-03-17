@@ -1,0 +1,21 @@
+<div class="main main-new">
+    <div class="posting">
+      <%=form_tag("/main/create") do%>
+        <textarea name="content" rows="20" cols="100"></textarea>
+        <select name="like">
+        <option>0</option>
+        <option>0.5</option>
+        <option>1.0</option>
+        <option>1.5</option>
+        <option>2.0</option>
+        <option>2.5</option>
+        <option>3.0</option>
+        <option>3.5</option>
+        <option>4.0</option>
+        <option>4.5</option>
+        <option>5.0</option>
+        </select>
+        <button class="fa-solid fa-paper-plane" type="submit"></button>
+      <% end %>
+    </div>
+</div>

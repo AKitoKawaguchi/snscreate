@@ -1,0 +1,59 @@
+<div class="main posts-index">
+  <div class="container">
+    <div class="post">
+      <div class="post-content">
+        <div class="postname-show">
+          <%= link_to(@user.name,"/users/#{@user.id}") %>
+        </div>
+        <div class="post-index-show">
+          <% integer = @post.like.floor%>
+          <div class="star">
+            <% integer.times do |i|%>
+                <span class="fa-solid fa-star"></span>
+            <% end %>
+            <% unless @post.like - integer == 0 %>
+                <span class="fa-solid fa-star-half"></span>
+            <% end %>
+          </div>
+          <div class="hashtag">
+            <%= render_with_hashtags(@post.content) %>
+          </div>
+        </div>
+       <div class="show-option">
+        <div class="comment">
+          <%=link_to("/main/#{@post.id}/comment") do %>
+            <span class="fa-regular fa-comment"></span>
+          <% end %> 
+          <%=@comments.count %>
+        </div>
+       <div class="like">
+        <% if Like.find_by(user_id:@current_user.id,post_id:@post.id) %>
+          <%=link_to("/likes/#{@post.id}/destroy",data:{turbo_method: :post}) do %>
+            <span class="fa-solid fa-heart"></span>
+          <% end %>
+        <% else %>
+          <%=link_to("/likes/#{@post.id}/create",data:{turbo_method: :post}) do %>
+            <span class="fa-regular fa-heart"></span>
+          <% end %>
+        <% end %>
+        <%=Like.where(post_id:@post.id).count%>
+       </div>
+        <div class="dstroy">
+          <%=link_to("/main/#{@post.id}/destroy",data:{turbo_method: :post}) do %>
+            <span class="fa-solid fa-trash"></span>
+          <% end %>
+        </div>
+      </div>
+      </div>
+    </div>
+      <% @comments.each_with_index do |comment,i|%>
+        <% if i == 0%>
+          <span class="fa-solid fa-arrow-down-long fa-2x"></span>
+        <% end %>
+        <div class="comment-list">
+          <%=comment.user.name%>
+          <%=comment.content%>
+        </div>
+      <% end %>
+  </div>
+</div>

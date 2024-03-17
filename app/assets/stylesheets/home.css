@@ -1,0 +1,23 @@
+.main {
+    text-align: center;
+    color: mediumaquamarine;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 80px 50px;
+}
+
+.top{
+    width: 80%;
+    margin: 100px auto;
+}
+.start-button{
+    width: 8%;
+    border-radius: 12px;
+    background-color: mediumaquamarine;
+    margin: 80px auto;
+}
+
+.top a{
+    color: aliceblue;
+}

@@ -1,0 +1,68 @@
+<div class="main posts-index">
+  <div class="user-search">
+    <%=form_tag("/searches/user_search") do %>
+      <input name="user" class="user-search-input"placeholder="ユーザー名">
+      <button type="submit"><span class="fa-solid fa-magnifying-glass"></span></button>
+    <% end %>
+  </div>
+  <div class="container">
+  <% @posts.each do |post|%>
+    <% if post.like %>
+      <article class="posts-index-item">
+        <div class="postname">
+          <%= link_to(post.user.name,"/users/#{post.user.id}")%>
+          </div>
+          <div class="post-index">
+          <%=link_to(post.content,"/main/#{post.id}") %>
+            <% integer = post.like.floor%>
+              <div class="star">
+                <% integer.times do |i|%>
+                  <span class="fa-solid fa-star"></span>
+                <% end %>
+                <% unless post.like - integer == 0 %>
+                  <span class="fa-solid fa-star-half"></span>
+                <% end %>
+              </div>
+          </div>
+        <div class="post-option">
+          <% comments = Post.where(tocomment:post.id)%>
+          <div class="comment">
+            <%=link_to("/main/#{post.id}/comment") do %>
+              <span class="fa-regular fa-comment"></span>
+            <% end %> 
+              <%=comments.count %>
+          </div>
+          <div class="like">
+          <% if Like.find_by(user_id:@current_user.id,post_id:post.id) %>
+            <%=link_to("/likes/#{post.id}/destroy",data:{turbo_method: :post}) do %>
+              <span class="fa-solid fa-heart"></span>
+            <% end %>
+          <% else %>
+            <%=link_to("/likes/#{post.id}/create",data:{turbo_method: :post}) do %>
+              <span class="fa-regular fa-heart"></span>
+            <% end %>
+          <% end %>
+            <%=Like.where(post_id:post.id).count%>
+          </div>
+        </div>
+      </article>
+    <% end %>
+  <% end %>
+  <div class="index-make">
+    <%=link_to "/main/new" do%>
+        <span class="fa-regular fa-square-plus fa-3x"></span>
+    <% end %>
+  </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+      $(".posts-index-item,.gray-icon").removeClass("gray");
+      $(".posts-index-item,.gray-icon").hover(function(){
+        $(this).addClass("gray");
+      },function(){
+        $(this).removeClass("gray");
+      });
+    });
+</script>
