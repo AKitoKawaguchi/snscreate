@@ -37,8 +37,8 @@
     <div class="overflow-post">
       <% @user.posts.each do |post|%>
       <% if post.like %>
-      <div class="posts-mypage-post">
-          <%=link_to(post.content,"/main/#{post.id}")%>
+      <div class="posts-mypage-post" data-mypage-id="<%= post.to_json %>">
+          <%=render_with_hashtags(post.content)%>
           <div class="star">
             <% integer = post.like.floor%>
             <% integer.times do |i|%>
@@ -66,9 +66,9 @@
     <p>いいねした投稿</p>
     <div class="overflow-fav">
     <% @likes.each do |like|%>
-        <div class="posts-mypage-like">
+        <div class="posts-mypage-like" data-like-id="<%=like.post.to_json%>">
           <%=link_to(like.post.user.name,"/users/#{like.post.user.id}")%>
-          <%=link_to(like.post.content,"/main/#{like.post.id}")%>
+          <%=render_with_hashtags(like.post.content)%>
           <div class="star">
             <% integer = like.post.like.floor %>
             <% integer.times do |i|%>
@@ -107,4 +107,19 @@
         $(".posts-mypage-item-reply").removeClass("white");
       });
     })
+
+    $(".posts-mypage-post").on("click",function(e){
+        post = $(this).data("mypage-id");
+        if (!$(e.target).closest("a").length){
+            window.location.href = `/main/${post.id}`
+        }
+    });
+
+    $(".posts-mypage-like").on("click",function(e){
+        post = $(this).data("like-id");
+        console.log(e.target);
+        if (!$(e.target).closest("a").length){
+            window.location.href = `/main/${post.id}`
+        }
+    });
 </script>

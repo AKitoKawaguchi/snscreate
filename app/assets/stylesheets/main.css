@@ -82,6 +82,18 @@
     color: rgba(29, 155, 240);
 }
 
+.posts-mypage-post a{
+    color: rgba(29, 155, 240);
+}
+
+.posts-mypage-like a{
+    color: rgba(29, 155, 240);
+}
+
+.posts-mypage-like a:nth-child(1){
+    color: mediumaquamarine;
+}
+
 
 .post{
     position: relative;
