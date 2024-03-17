@@ -2,7 +2,7 @@
   <div class="mypage">
     <div class="mypage-section1">
       <div class="user-image">
-        <%=image_tag("/user_images/#{@user.image_name}")%>
+        <%=image_tag("/user_images/#{@user.image_name}",class: "mypage-image")%>
       </div>
       <div class="mypage-wrap">
         <p><%=@user.name%></p>

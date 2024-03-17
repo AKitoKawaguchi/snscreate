@@ -11,6 +11,7 @@
       <article class="posts-index-item">
         <div class="postname">
           <%= link_to(post.user.name,"/users/#{post.user.id}")%>
+          <%=image_tag "/user_images/#{post.user.image_name}", size: "50x50", style: "object-fit:cover;" %>
           </div>
           <div class="post-index">
           <%=link_to(post.content,"/main/#{post.id}") %>
