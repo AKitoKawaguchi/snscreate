@@ -8,13 +8,13 @@
   <div class="container">
   <% @posts.each do |post|%>
     <% if post.like %>
-      <article class="posts-index-item">
+      <article class="posts-index-item" id="post" data-post-id="<%= post.to_json %>">
         <div class="postname">
           <%= link_to(post.user.name,"/users/#{post.user.id}")%>
           <%=image_tag "/user_images/#{post.user.image_name}", size: "50x50", style: "object-fit:cover;" %>
           </div>
           <div class="post-index">
-          <%=link_to(post.content,"/main/#{post.id}") %>
+          <%=render_with_hashtags(post.content)%>
             <% integer = post.like.floor%>
               <div class="star">
                 <% integer.times do |i|%>
@@ -65,5 +65,13 @@
       },function(){
         $(this).removeClass("gray");
       });
+    });
+
+    $(".posts-index-item").on("click",function(e){
+        post = $("#post").data("post-id");
+        console.log(e.target);
+        if (!$(e.target).closest("a").length){
+            window.location.href = `/main/${post.id}`
+        }
     });
 </script>
