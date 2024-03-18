@@ -14,3 +14,14 @@
   <% end %>
 </div>
 </div>
+
+<script type="text/javascript">
+    $(function() {
+      $(".favs-index-item").removeClass("gray");
+      $(".favs-index-item").hover(function(){
+        $(this).addClass("gray");
+      },function(){
+        $(this).removeClass("gray");
+      });
+    });
+</script>
