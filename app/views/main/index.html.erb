@@ -5,6 +5,12 @@
       <button type="submit"><span class="fa-solid fa-magnifying-glass"></span></button>
     <% end %>
   </div>
+  <div class="post-search">
+    <%=form_tag("/searches/post_search") do %>
+      <input name="post" class="user-search-input"placeholder="投稿">
+      <button type="submit"><span class="fa-solid fa-magnifying-glass"></span></button>
+    <% end %>
+  </div>
   <div class="container">
   <% @posts.each do |post|%>
     <% if post.like %>
@@ -65,13 +71,13 @@
       },function(){
         $(this).removeClass("gray");
       });
-    });
+    
 
     $(".posts-index-item").on("click",function(e){
         post = $(this).data("post-id");
-        console.log(post);
         if (!$(e.target).closest("a").length){
             window.location.href = `/main/${post.id}`
         }
+    });
     });
 </script>

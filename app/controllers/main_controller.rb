@@ -1,4 +1,5 @@
 class MainController < ApplicationController
+  before_action :ensure_user_id,{only:[:index,:show,:new,:create,:destroy,:comment,:reply,:hashtag]}
   def index
     @posts = Post.all.order(created_at: :desc)
   end
@@ -33,7 +34,7 @@ class MainController < ApplicationController
   end
 
   def extract_hashtag_from_text(text)
-    text.scan(/#\w+/).map(&:downcase).uniq
+    text.scan(/#\w+/).map.uniq
   end
 
   private :extract_hashtag_from_text
@@ -56,6 +57,10 @@ class MainController < ApplicationController
       tocomment: params[:id],
       user_id: @current_user.id
     )
+    extract_hashtag_from_text(params[:comment]).each do |tag|
+      hashtag = Hashtag.find_or_create_by(hashname:tag.delete("#"))
+      @post.hashtags << hashtag
+    end
     @post.save
     redirect_to("/main/index")
   end
@@ -65,4 +70,10 @@ class MainController < ApplicationController
     @posts = @tag.posts
   end
   
+  def ensure_user_id
+    unless session[:user_id]
+      flash[:notice] = "権限がありません"
+      redirect_to("/login")
+    end
+  end
 end

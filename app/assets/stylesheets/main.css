@@ -1,5 +1,6 @@
 .main a{
     color: mediumaquamarine;
+    cursor: pointer;
 }
 
 .posts-index{
@@ -8,6 +9,20 @@
 .user-search{
     position: absolute;
     top: 80px;
+    right: 20px;
+    border: none;
+    display: flex;
+    padding: 5px 20px;
+    border: none;
+    color: #8b8b8b;
+    background-color:rgb(237, 237, 237);
+    border-radius: 20px;
+    flex-direction: column;
+}
+
+.post-search{
+    position: absolute;
+    top: 160px;
     right: 20px;
     border: none;
     display: flex;
@@ -30,10 +45,12 @@
 
 
 .container{
-    width: 65%;
+    width: 75%;
     margin: 50px auto;
-    height: 50vh;
+    height: 75vh;
+    overflow-y: auto;
 }
+
 .posts-index-item {
     position: relative;
     padding: 0px 20px 0 0;
@@ -82,12 +99,20 @@
     color: rgba(29, 155, 240);
 }
 
-.posts-mypage-post a{
+.post-mypage-content a{
     color: rgba(29, 155, 240);
 }
 
 .posts-mypage-like a{
     color: rgba(29, 155, 240);
+}
+
+.comment-list a{
+    color: rgba(29, 155, 240);
+}
+
+.comment-list a:nth-child(1){
+    color: mediumaquamarine;
 }
 
 .posts-mypage-like a:nth-child(1){
@@ -97,7 +122,10 @@
 
 .post{
     position: relative;
-    height: 60%;
+    height: 40%;
+    width: 75%;
+    margin: 50px auto 0;
+    overflow-y: auto;
     background-color: white;
     overflow: hidden;
     box-shadow: 0 2px 6px #c1ced7;
@@ -105,13 +133,19 @@
 
 .post-content{
     position: relative;
-    padding: 20px;
+    padding: 30px;
     font-size: 24px;
     display: grid;
     grid-template-rows: 2fr 1fr;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
-  
+
+.post-show-content{
+    font-size: 24px;
+    display: grid;
+    grid-template-rows: 3fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
 .star{
     float: right;
 }
@@ -145,7 +179,7 @@
 
 .comment-list{
     padding: 20px 30px;
-    margin: 0px 30px 20px 30px;
+    margin: 0px 100px 20px 100px;
     background-color: white;
     overflow: hidden;
     box-shadow: 0 2px 6px #c1ced7;
@@ -162,8 +196,7 @@
 .show-option{
     grid-row: 2/3;
     grid-column: 2/6;
-    position: absolute;
-    bottom: 30px;
+    bottom: 0px;
     display: flex;
     gap: 100px;
     align-items: end;
@@ -220,6 +253,16 @@
     grid-column: 2/6;
     position: absolute;
     bottom: 5px;
+    display: flex;
+    align-items: end;
+    gap: 100px;
+}
+
+.post-mypage-option{
+    grid-row: 2/3;
+    grid-column: 2/6;
+    position: absolute;
+    bottom: 1px;
     display: flex;
     align-items: end;
     gap: 100px;

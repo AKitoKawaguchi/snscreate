@@ -8,17 +8,19 @@
         <p><%=@user.name%></p>
         <% if @current_user.id != @user.id%>
           <% if Fav.find_by(follow:@current_user.id,follower:@user.id) %>
-            <%=link_to("フォロー解除","/favs/#{@user.id}/unfollow",data:{turbo_method: :post})%>
+            <%=link_to("フォロー解除","/favs/#{@user.id}/unfollow",class: "follow",data:{turbo_method: :post})%>
           <% else %>
-            <%=link_to("フォロー","/favs/#{@user.id}/follow",data:{turbo_method: :post})%>
+            <%=link_to("フォロー","/favs/#{@user.id}/follow",class: "follow",data:{turbo_method: :post})%>
           <% end %>
         <% end %>
         <p>フォロー<%=@follow.count%></p>
         <p>フォロワー<%=@follower.count%></p>
+        <% if @current_user.id == @user.id%>
+          <%=link_to "/users/#{@user.id}/edit" do%>
+          <span class="fa-solid fa-gear fa-lg"></span>
+          <% end %>
+        <% end %>
       </div>
-      <%=link_to "/users/#{@user.id}/edit" do%>
-        <span class="fa-solid fa-gear fa-lg"></span>
-      <% end %>
     </div>
     <div class="mypage-section2">
       <p><%=@user.profile%></p>
@@ -31,14 +33,18 @@
       <div class="posts-mypage-item-reply">
         返信
       </div>
+      <div class="posts-mypage-item-like">
+        いいね
+      </div>
     </div>
     <div class="clear">
     </div>
     <div class="overflow-post">
       <% @user.posts.each do |post|%>
       <% if post.like %>
-      <div class="posts-mypage-post" data-mypage-id="<%= post.to_json %>">
-          <%=render_with_hashtags(post.content)%>
+      <article class="posts-mypage-post" data-mypage-id="<%= post.to_json %>">
+          <div class="post-mypage-content">
+            <%=render_with_hashtags(post.content)%>
           <div class="star">
             <% integer = post.like.floor%>
             <% integer.times do |i|%>
@@ -48,27 +54,74 @@
                 <span class="fa-solid fa-star-half"></span>
             <% end %>
           </div>
-      </div>
+          </div>
+          <div class="post-mypage-option">
+            <% comments = Post.where(tocomment:post.id)%>
+            <div class="comment">
+              <%=link_to("/main/#{post.id}/comment") do %>
+                <span class="fa-regular fa-comment"></span>
+              <% end %> 
+                <%=comments.count %>
+            </div>
+            <div class="like">
+            <% if Like.find_by(user_id:@current_user.id,post_id:post.id) %>
+              <%=link_to("/likes/#{post.id}/destroy",data:{turbo_method: :post}) do %>
+                <span class="fa-solid fa-heart"></span>
+              <% end %>
+            <% else %>
+              <%=link_to("/likes/#{post.id}/create",data:{turbo_method: :post}) do %>
+                <span class="fa-regular fa-heart"></span>
+              <% end %>
+            <% end %>
+              <%=Like.where(post_id:post.id).count%>
+            </div>
+          </div>
+      </article>
       <% end %>
       <% end %>
     </div>
-    <div class="overflow-reply">
+    <div class="overflow-reply none">
       <% @comments.each do |comment|%>
         <% unless comment.like %>
-        <div class="posts-mypage-reply">
-          <%=comment.content%>
+        <div class="posts-mypage-post">
+          <div class="post-mypage-content">
+            <%=comment.content%>
+          </div>
+          <div class="post-mypage-option">
+            <% comments = Post.where(tocomment:comment.id)%>
+            <div class="comment">
+              <%=link_to("/main/#{comment.id}/comment") do %>
+                <span class="fa-regular fa-comment"></span>
+              <% end %> 
+                <%=comments.count %>
+            </div>
+            <div class="like">
+            <% if Like.find_by(user_id:@current_user.id,post_id:comment.id) %>
+              <%=link_to("/likes/#{comment.id}/destroy",data:{turbo_method: :post}) do %>
+                <span class="fa-solid fa-heart"></span>
+              <% end %>
+            <% else %>
+              <%=link_to("/likes/#{comment.id}/create",data:{turbo_method: :post}) do %>
+                <span class="fa-regular fa-heart"></span>
+              <% end %>
+            <% end %>
+              <%=Like.where(post_id:comment.id).count%>
+            </div>
+          </div>
         </div>
         <% end %>
       <% end %>
     </div>
-    </div>
-    <div class="mypage-section4">
-    <p>いいねした投稿</p>
-    <div class="overflow-fav">
+    <div class="overflow-fav none">
     <% @likes.each do |like|%>
         <div class="posts-mypage-like" data-like-id="<%=like.post.to_json%>">
+        <div class="postname">
           <%=link_to(like.post.user.name,"/users/#{like.post.user.id}")%>
+          <%=image_tag "/user_images/#{like.post.user.image_name}", size: "50x50", style: "object-fit:cover;" %>
+        </div>
+        <div class="post-index">
           <%=render_with_hashtags(like.post.content)%>
+          <%if like.post.like%>
           <div class="star">
             <% integer = like.post.like.floor %>
             <% integer.times do |i|%>
@@ -77,7 +130,30 @@
             <% unless like.post.like - integer == 0 %>
                 <span class="fa-solid fa-star-half"></span>
             <% end %>
-          </div> 
+          </div>
+          <% end %>
+        </div>
+          <div class="post-option">
+          <% comments = Post.where(tocomment:like.post.id)%>
+          <div class="comment">
+            <%=link_to("/main/#{like.post.id}/comment") do %>
+              <span class="fa-regular fa-comment"></span>
+            <% end %> 
+              <%=comments.count %>
+          </div>
+          <div class="like">
+          <% if Like.find_by(user_id:@current_user.id,post_id:like.post.id) %>
+            <%=link_to("/likes/#{like.post.id}/destroy",data:{turbo_method: :post}) do %>
+              <span class="fa-solid fa-heart"></span>
+            <% end %>
+          <% else %>
+            <%=link_to("/likes/#{like.post.id}/create",data:{turbo_method: :post}) do %>
+              <span class="fa-regular fa-heart"></span>
+            <% end %>
+          <% end %>
+            <%=Like.where(post_id:like.post.id).count%>
+          </div>
+        </div> 
         </div>
     <% end %>
     </div>
@@ -92,21 +168,37 @@
 
 <script type="text/javascript">
     $(function() {
-      $(".overflow-reply").addClass("none");
+      $(".posts-mypage-post,.posts-mypage-like").removeClass("gray");
+      $(".posts-mypage-post,.posts-mypage-like").hover(function(){
+        $(this).addClass("gray");
+      },function(){
+        $(this).removeClass("gray");
+      });
       $(".posts-mypage-item-post").addClass("white");
       $(".posts-mypage-item-reply").on("click",function(){
         $(this).addClass("white");
         $(".overflow-reply").removeClass("none");
         $(".overflow-post").addClass("none");
+        $(".overflow-fav").addClass("none");
         $(".posts-mypage-item-post").removeClass("white");
+        $(".posts-mypage-item-like").removeClass("white");
       });
       $(".posts-mypage-item-post").on("click",function(){
         $(this).addClass("white");
         $(".overflow-post").removeClass("none");
+        $(".overflow-fav").addClass("none");
         $(".overflow-reply").addClass("none");
         $(".posts-mypage-item-reply").removeClass("white");
+        $(".posts-mypage-item-like").removeClass("white");
       });
-    })
+      $(".posts-mypage-item-like").on("click",function(){
+        $(this).addClass("white");
+        $(".overflow-fav").removeClass("none");
+        $(".overflow-post").addClass("none");
+        $(".overflow-reply").addClass("none");
+        $(".posts-mypage-item-reply").removeClass("white");
+        $(".posts-mypage-item-post").removeClass("white");
+      });
 
     $(".posts-mypage-post").on("click",function(e){
         post = $(this).data("mypage-id");
@@ -122,4 +214,5 @@
             window.location.href = `/main/${post.id}`
         }
     });
+    })
 </script>

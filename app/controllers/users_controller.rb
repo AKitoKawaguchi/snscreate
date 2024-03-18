@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :ensure_user_id,{only:[:mypage]}
+  before_action :ensure_correct_user,{only:[:edit,:update]}
 
   def new
     @user = User.new
@@ -79,6 +80,13 @@ class UsersController < ApplicationController
     unless session[:user_id]
       flash[:notice] = "権限がありません"
       redirect_to("/login")
+    end
+  end
+
+  def ensure_correct_user
+    if @current_user.id != params[:id].to_i
+      flash[:notice] = "権限がありません"
+      redirect_to("/main/index")
     end
   end
 end

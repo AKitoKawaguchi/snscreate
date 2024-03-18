@@ -20,8 +20,10 @@ Rails.application.routes.draw do
   post "likes/:post_id/destroy" => "likes#destroy"
   post "favs/:user_id/follow" => "favs#follow"
   post "favs/:user_id/unfollow" => "favs#unfollow"
-  get "searches/:name" => "searches#usersearch"
+  get "searches/:name/user" => "searches#usersearch"
   post "searches/user_search" => "searches#user_search"
+  get "searches/:post/post" => "searches#postsearch"
+  post "searches/post_search" => "searches#post_search"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
