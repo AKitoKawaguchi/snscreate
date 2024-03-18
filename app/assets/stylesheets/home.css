@@ -21,3 +21,8 @@
 .top a{
     color: aliceblue;
 }
+
+#start{
+    color: white;
+    cursor: pointer;
+}
