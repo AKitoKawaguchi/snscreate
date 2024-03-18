@@ -8,7 +8,7 @@
             <p>メールアドレス</p>
             <% @user.errors.full_messages.each do |message|%>
                 <%=message %>
-            <%  end %>D
+            <%  end %>
             <input name="email" value="<%=@user.email%>">
             <p>パスワード(6文字以上12文字以下の英数字)</p>
             <input name="password" value="<%=@user.password%>">

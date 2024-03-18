@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   post "likes/:post_id/destroy" => "likes#destroy"
   post "favs/:user_id/follow" => "favs#follow"
   post "favs/:user_id/unfollow" => "favs#unfollow"
+  get "favs/:id/followlist" => "favs#followlist"
+  get "favs/:id/followerlist" => "favs#followerlist"
   get "searches/:name/user" => "searches#usersearch"
   post "searches/user_search" => "searches#user_search"
   get "searches/:post/post" => "searches#postsearch"

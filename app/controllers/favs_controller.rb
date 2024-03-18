@@ -18,4 +18,22 @@ class FavsController < ApplicationController
         @fav.destroy
         redirect_to("/users/#{@user.id}")
     end
+
+    def followlist
+        @follows = Fav.where(follow:params[:id])
+        @users = Array.new
+        @follows.each do |follow|
+            user = User.find_by(id:follow.follower)
+            @users << user
+        end
+    end
+
+    def followerlist
+        @followers = Fav.where(follower:params[:id])
+        @users = Array.new
+        @followers.each do |follower|
+            user = User.find_by(id:follower.follow)
+            @users << user
+        end
+    end
 end

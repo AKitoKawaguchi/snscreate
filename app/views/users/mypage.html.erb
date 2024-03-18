@@ -13,8 +13,8 @@
             <%=link_to("フォロー","/favs/#{@user.id}/follow",class: "follow",data:{turbo_method: :post})%>
           <% end %>
         <% end %>
-        <p>フォロー<%=@follow.count%></p>
-        <p>フォロワー<%=@follower.count%></p>
+        <p><%=link_to("フォロー","/favs/#{@user.id}/followlist")%><%=@follow.count%></p>
+        <p><%=link_to("フォロワー","/favs/#{@user.id}/followerlist")%><%=@follower.count%></p>
         <% if @current_user.id == @user.id%>
           <%=link_to "/users/#{@user.id}/edit" do%>
           <span class="fa-solid fa-gear fa-lg"></span>

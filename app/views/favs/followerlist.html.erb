@@ -1,0 +1,16 @@
+<div class="main main-followerlist">
+<div class="container">
+  <% if @user %>
+    <% @users.each do |user| %>
+      <article class="favs-index-item">
+        <div class="postname">
+          <%= link_to(user.name,"/users/#{user.id}")%>
+          <%=image_tag "/user_images/#{user.image_name}", size: "120x120", style: "object-fit:cover;" %>
+        </div>
+      </article>
+    <% end %>
+  <% else %>
+    <p>フォローされているユーザーはいません。</p>
+  <% end %>
+</div>
+</div>
