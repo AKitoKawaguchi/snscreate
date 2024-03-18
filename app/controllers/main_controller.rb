@@ -1,5 +1,5 @@
 class MainController < ApplicationController
-  before_action :ensure_user_id,{only:[:index,:show,:new,:create,:destroy,:comment,:reply,:hashtag]}
+  before_action :ensure_user_id,{only:[:show,:new,:create,:destroy,:comment,:reply,:hashtag]}
   def index
     @posts = Post.all.order(created_at: :desc)
   end
