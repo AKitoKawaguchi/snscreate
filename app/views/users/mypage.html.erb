@@ -166,6 +166,53 @@
   </div>
 </div>
 
+<div class="tuuti none">
+      <% if @notifications %>
+        <% @notifications.each do |notification| %>
+          <div class="notice" data-notification-id ="<%=notification.to_json%>">
+            <% visitor = User.find_by(id:notification.visitor_id) %>
+            <% if notification.action == "like"%>
+              <% post = Like.find_by(id:notification.like_id)%>
+            <% elsif notification.action == "comment"%>
+              <% comment = Post.find_by(id:notification.comment_id)%>
+            <% end %>
+            <%=image_tag "/user_images/#{visitor.image_name}", size: "40x40", style: "object-fit:cover;"%>
+            <% case notification.action %>
+              <% when "follow" then %>
+                <%=link_to(visitor.name,"/users/#{visitor.id}")%>があなたをフォローしました<%=notification.created_at%>
+                <% if (Time.zone.now-notification.created_at).floor/60 < 60 %>
+                  <%=(Time.zone.now-notification.created_at).floor/60%>分前
+                <% elsif (Time.zone.now-notification.created_at).floor/60 >= 60%>
+                  <%=(Time.zone.now-notification.created_at).floor/3600%>時間前
+                <% else %>
+                  <%=(Time.zone.now-notification.created_at).floor/86400%>日前
+                <% end %>
+              <% when "like" then%>
+                <%=link_to visitor.name,"/users/#{visitor.id}",style: "color: mediumaquamarine; font-weight: bold;"%>が<%=link_to "あなたの投稿","/main/#{post.post_id}",style: "color: mediumaquamarine; font-weight: bold;"%>にいいねしました
+                <% if (Time.zone.now-notification.created_at).floor/60 < 60 %>
+                  <%=(Time.zone.now-notification.created_at).floor/60%>分前
+                <% elsif (Time.zone.now-notification.created_at).floor/60 >= 60%>
+                  <%=(Time.zone.now-notification.created_at).floor/3600%>時間前
+                <% else %>
+                  <%=(Time.zone.now-notification.created_at).floor/86400%>日前
+                <% end %>
+              <% when "comment" then %>
+                <%=link_to visitor.name,"/users/#{visitor.id}",style: "color: mediumaquamarine; font-weight: bold;"%>が<%=link_to "あなたの投稿","/main/#{comment.tocomment}",sytle: "color: mediumaquamarine; font-weight: bold;"%>にコメントしました
+                <% if (Time.zone.now-notification.created_at).floor/60 < 60 %>
+                  <%=(Time.zone.now-notification.created_at).floor/60%>分前
+                <% elsif (Time.zone.now-notification.created_at).floor/60 >= 60%>
+                  <%=(Time.zone.now-notification.created_at).floor/3600%>時間前
+                <% else %>
+                  <%=(Time.zone.now-notification.created_at).floor/86400%>日前
+                <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <p>通知はありません</p>
+      <% end %>
+    </div>
+
 <script type="text/javascript">
     $(function() {
       $(".posts-mypage-post,.posts-mypage-like").removeClass("gray");
@@ -199,6 +246,16 @@
         $(".posts-mypage-item-reply").removeClass("white");
         $(".posts-mypage-item-post").removeClass("white");
       });
+      $(".posts-mypage-item-notice").on("click",function(){
+        $(this).addClass("white");
+        $(".overflow-notice").removeClass("none");
+        $(".overflow-post").addClass("none");
+        $(".overflow-reply").addClass("none");
+        $(".overflow-fav").addClass("none");
+        $(".posts-mypage-item-reply").removeClass("white");
+        $(".posts-mypage-item-post").removeClass("white");
+        $(".posts-mypage-item-like").removeClass("white");
+      });
 
     $(".posts-mypage-post").on("click",function(e){
         post = $(this).data("mypage-id");
@@ -209,10 +266,24 @@
 
     $(".posts-mypage-like").on("click",function(e){
         post = $(this).data("like-id");
-        console.log(e.target);
         if (!$(e.target).closest("a").length){
             window.location.href = `/main/${post.id}`
         }
     });
+    $(".fa-bell").on("click",function(){
+        $(".tuuti").toggleClass("none");
+        $(".notice").each(function(){
+            notice = $(this).data("notification-id");
+            if (notice.checked ===false){
+                $(this).addClass("check");
+            }
+        });
+    });
+    $(".notice").on("click",function(e){
+        notification = $(this).data("notification-id");
+        if (!$(e.target).closest("a").length){
+            window.location.href = `/notifications/${notification.id}`
+        }
+    })
     })
 </script>

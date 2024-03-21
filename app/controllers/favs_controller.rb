@@ -6,6 +6,7 @@ class FavsController < ApplicationController
             follower:params[:user_id]
         )
         @fav.save
+        @fav.follow_notification_by(@current_user)
         redirect_to("/users/#{@user.id}")
     end
 
@@ -15,6 +16,7 @@ class FavsController < ApplicationController
             follow:@current_user.id,
             follower:params[:user_id]
         )
+        @fav.unfollow_notification_by(@current_user)
         @fav.destroy
         redirect_to("/users/#{@user.id}")
     end

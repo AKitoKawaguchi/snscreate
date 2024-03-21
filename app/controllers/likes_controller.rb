@@ -6,6 +6,7 @@ class LikesController <ApplicationController
         )
 
         @like.save
+        @like.like_notification_by(@current_user)
         redirect_to(request.fullpath)
     end
 

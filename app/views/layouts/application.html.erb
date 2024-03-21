@@ -32,6 +32,13 @@
     <li>
     <%=link_to("ログアウト","/logout",data:{turbo_method: :post})%>
     </li>
+    <li>
+    <% if @notifications.where(checked:false).size == 0%>
+      <span class="fa-regular fa-bell"></span>
+    <% else %>
+      <span class="fa-solid fa-bell"></span>
+    <% end %>
+    </li>
   </ul>
   <% else %>
   <ul class="header-menus">

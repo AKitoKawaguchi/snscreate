@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :ensure_user_id,{only:[:mypage]}
   before_action :ensure_correct_user,{only:[:edit,:update]}
-
+  
   def new
     @user = User.new
   end

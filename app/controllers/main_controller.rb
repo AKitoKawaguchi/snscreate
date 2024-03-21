@@ -62,6 +62,7 @@ class MainController < ApplicationController
       @post.hashtags << hashtag
     end
     @post.save
+    @post.comment_notification_by(@current_user)
     redirect_to("/main/index")
   end
 

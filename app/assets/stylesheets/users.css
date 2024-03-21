@@ -180,3 +180,17 @@ label{
     height: 350px;
     object-fit: cover;
 }
+
+.tuuti{
+    position: fixed;
+    top:80px;
+    right: 0;
+    width: 30%;
+    height: 90%;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .check{
+    background-color: rgb(252, 242, 228) !important;
+  }
