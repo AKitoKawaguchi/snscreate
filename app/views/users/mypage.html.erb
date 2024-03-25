@@ -5,7 +5,11 @@
         <%=image_tag("/user_images/#{@user.image_name}",class: "mypage-image")%>
       </div>
       <div class="mypage-wrap">
-        <p><%=@user.name%></p>
+        <p class="name"><%=@user.name%></p>
+        <div class="profile-detail">
+          <%=@user.profile%>
+        </div>
+        <div class="flex">
         <% if @current_user.id != @user.id%>
           <% if Fav.find_by(follow:@current_user.id,follower:@user.id) %>
             <%=link_to("フォロー解除","/favs/#{@user.id}/unfollow",class: "follow",data:{turbo_method: :post})%>
@@ -20,10 +24,85 @@
           <span class="fa-solid fa-gear fa-lg"></span>
           <% end %>
         <% end %>
+        </div>
       </div>
     </div>
     <div class="mypage-section2">
-      <p><%=@user.profile%></p>
+    <div class="flex">
+      <div class="stop">
+        <button class="start">start</button>
+        <% if @current_user.id == @user.id%>
+          <%=link_to("/users/#{@user.id}/train") do%>
+            <button class="start">詳細</button>
+          <% end %>
+        <% end %>
+      </div>
+    <div class="train">
+      <div class="train-title">
+        トレーニングカレンダー
+      </div>
+      <div class="train-week">
+        <div class="day">月</div>
+        <div class="day">火</div>
+        <div class="day">水</div>
+        <div class="day">木</div>
+        <div class="day">金</div>
+        <div class="day">土</div>
+        <div class="day">日</div>
+      </div>
+      <div class="train-row">
+        <div class="train-month">
+          <div class="train-month-2">
+          </div>
+        </div>
+        <div class="train-row-parant-child">
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+        </div>
+        <div class="train-row-parant-child">
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+        </div>
+        <div class="train-row-parant-child">
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+        </div>
+        <div class="train-row-parant-child">
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+        </div>
+        <div class="train-row-parant-child">
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+          <div class="train-row-child-child"></div>
+        </div>
+      </div>
+    </div>
+    </div>
     </div>
     <div class="mypage-section3">
     <div class="choice">
@@ -285,5 +364,46 @@
             window.location.href = `/notifications/${notification.id}`
         }
     })
+
+    var now1;
+    var now2;
+    var time1;
+    var time2;
+    var date = new Date();
+    date.setDate(1);
+    var today = new Date();
+    var point = date.getDay()+today.getDate()-1;
+    var row = Math.floor(point/7) + 1;
+    var column = (point % 7);
+    var totaltime = 0;
+    var i;
+    $(".train-month-2").text(`${today.getMonth()+1}月`);
+    $(".start").on("click",function(){
+        if ($(this).text() == "start"){
+            if (i && i != today.getDate()){
+                totaltime = 0;
+            }
+            now1 = new Date();
+            time1 = now1.getHours()*60+now1.getMinutes();
+            $(this).text("stop");
+        }
+        else{
+            $(this).text("start");
+            now2 = new Date();
+            var now = new Date();
+            i = now.getDate();
+            time2 = now2.getHours()*60+now2.getMinutes();
+            totaltime = totaltime + (time2-time1);
+            if(totaltime >= 90){
+                $(`.train-row .train-row-parant-child:nth-child(${row+1}) .train-row-child-child:nth-child(${column})`).addClass("high");
+            }else if(totaltime >= 60){
+                $(`.train-row .train-row-parant-child:nth-child(${row+1}) .train-row-child-child:nth-child(${column})`).addClass("medium-high");
+            }else if(totaltime >= 30){
+                $(`.train-row .train-row-parant-child:nth-child(${row+1}) .train-row-child-child:nth-child(${column})`).addClass("medium");
+            }else if(totaltime >= 10){
+                $(`.train-row .train-row-parant-child:nth-child(${row+1}) .train-row-child-child:nth-child(${column})`).addClass("low");
+            }
+        }
     })
+    });
 </script>

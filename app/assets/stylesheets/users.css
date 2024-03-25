@@ -1,11 +1,43 @@
 .mypage-image{
-   width: 350px;
-   height: 350px;
+   width: 250px;
+   height: 250px;
    object-fit: cover;
+}
+.users-login,.users-new{
+    background-color: rgba(0,0,0,0.1);
+}
+.users-login .container,.users-new .container{
+    border: 1px solid black;
+    box-shadow: 0 2px 6px black;
+    padding: 20px;
+    width: 30%;
+    background-color: white;
+}
+
+.login,.signup{
+    font-size: 100px;
+    font-weight: bold;
+    margin-bottom: 80px;
+}
+
+.input{
+    width: 300px;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+.login-button,.signup-button{
+    background-color: rgb(15, 187, 250);
+    border: none;
+    width: 77%;
+    margin-top: 20px;  
+    padding: 10px;
+    font-size: 30px;
+    color: white;
 }
 
 .user-image{
-    margin: 10px;
+    margin: 10px 10px 0px 10px;
 }
 
 .mypage{
@@ -13,7 +45,6 @@
     height: 100%;
     display: grid;
     box-sizing: border-box;
-    grid-template-rows: 1fr 1fr 1fr 1fr ; 
     grid-template-columns: 5fr 2fr 2fr 3fr;
 }
 
@@ -26,12 +57,31 @@
 }
 
 .mypage-wrap{
-    display: flex;
     flex-flow: row;
     align-items: center;
     justify-content: center;
     gap:30px
 }
+
+.flex{
+    display: flex;
+    gap:10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.stop button{
+    display: block;
+    border: none;
+    background-color: mediumaquamarine;
+    font-size: large;
+    color: white;
+    width: 150px;
+    height: 40px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
 .mypage-section1{
     grid-row: 1/4;
     grid-column: 1/2;
@@ -40,11 +90,71 @@
 .mypage-section2{
     grid-row: 4/5;
     grid-column: 1/2;
-    padding: 20px 30px;
+    padding: 0px 30px 20px 30px;
+}
+
+.name{
+    font-size: large;
+}
+
+.profile-detail{
     background-color: white;
     overflow: hidden;
     box-shadow: 0 2px 6px #c1ced7;
     text-align: left;
+    width: 80%;
+    height: 80px;
+    margin: 0 auto;
+}
+.train{
+    width: 190px;
+    margin: 0 auto;
+}
+.train-week{
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.day{
+    margin-right: 4px;
+    text-align: center;
+    width: 20px;
+    font-size: 0.6rem;
+}
+
+.train-row{
+    position: relative;
+}
+
+.train-month{
+    position: absolute;
+    left: -36px;
+    width: 30%;
+    height: 100%;
+}
+
+.train-month-2{
+    font-size: 0.6rem;
+    margin-top:40px;
+}
+
+.train-row-parant-child{
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.train-row-child-child{
+    width: 20px;
+    height: 20px;
+    float: left;
+    border-radius: 3px;
+    margin-left: 4px;
+    margin-bottom: 4px;
+    background-color: #edf2fa;
 }
 
 .mypage-section3{
@@ -175,6 +285,21 @@ label{
     background-color: rgba(0,0,0,0.03);
 }
 
+.low{
+    background-color: #b0f5e5;
+}
+
+.medium{
+    background-color: #35f2c6;
+}
+
+.medium-high{
+    background-color: #0fbdb4;
+}
+
+.high{
+    background-color: #077485;
+}
 .main-edit img{
     width: 350px;
     height: 350px;
@@ -193,4 +318,68 @@ label{
 
   .check{
     background-color: rgb(252, 242, 228) !important;
+  }
+
+  .train-item-trainning,.train-item-food,.train-item-sleep{
+    float: left;
+    width: 33.3%;
+    padding: 20px 0px;
+    margin: 0px 0px;
+    background-color: rgb(230, 228, 228);
+    overflow: hidden;
+    box-shadow: 0px 0px 2px #c1ced7;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+   }
+
+   .train-item-trainning-recode,.train-item-food-recode,.train-item-sleep-recode{
+    position: relative;
+    padding: 10px 20px;
+    margin: 0 auto;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0px 2px 6px #c1ced7;
+    text-align: left;
+    box-sizing: border-box;
+    width: 100%;
+    height: 150px;
+   }
+
+   .train-recode,.food-recode,.sleep-recode{
+    height: 360px;
+    overflow-y: auto;
+   }
+.setting{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+  .train-form{
+    background-color: #077485;
+  }
+
+  .train-form-select{
+    float: left;
+    padding: 10px;
+    font-weight: bold;
+    background-color: #077485;
+    color: white;
+    border-radius: 20px;
+  }
+
+  .train-form button{
+    float: right;
+    padding: 10px;
+    font-weight: bold;
+    background-color: #077485;
+    color: white;
+    border-radius: 20px;
+    border-color: #35f2c6;
+  }
+  .train-form textarea{
+    width: 95%;
+    border: 3px solid #077485;
+    margin-top:  0;
+    margin-bottom: 10px;
   }

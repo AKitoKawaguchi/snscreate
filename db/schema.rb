@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_19_070329) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_25_124828) do
   create_table "favs", force: :cascade do |t|
     t.integer "follow"
     t.integer "follower"
@@ -62,6 +62,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_19_070329) do
     t.float "like"
     t.integer "user_id"
     t.integer "tocomment"
+  end
+
+  create_table "trainrecodes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.text "trainnig"
+    t.text "food"
+    t.text "sleep"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

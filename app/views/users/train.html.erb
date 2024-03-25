@@ -1,0 +1,94 @@
+<div class="main users-train">
+  <div class="container">
+    <div>
+      <div class="train-item-trainning">
+        トレーニング
+      </div>
+      <div class="train-item-food">
+        食事
+      </div>
+      <div class="train-item-sleep">
+       睡眠
+      </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="train-recode">
+      <% if @trainning_recodes%>
+        <% @trainning_recodes.each do |recode| %>
+          <article class="train-item-trainning-recode">
+            <div class="date">
+              <%=recode.created_at.strftime("%Y/%m/%d")%>
+            </div>
+            <div class="recode-content">
+              <%=recode.trainnig%>
+            </div>
+            <%=link_to("/users/#{recode.id}/train_edit" ,class: "setting") do %>
+              <span class="fa-solid fa-gear fa-lg"></span>
+            <% end %>
+           </article>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="food-recode none">
+      <% if @food_recodes%>
+        <% @food_recodes.each do |recode| %>
+          <article class="train-item-food-recode">
+            <div class="date">
+              <%=recode.created_at.strftime("%Y/%m/%d")%>
+            </div>
+            <div class="recode-content">
+              <%=recode.food%>
+            </div>
+            <%=link_to("/users/#{recode.id}/train_edit" ,class: "setting") do %>
+              <span class="fa-solid fa-gear fa-lg"></span>
+            <% end %>
+           </article>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="sleep-recode none">
+      <% if @sleep_recodes%>
+        <% @sleep_recodes.each do |recode| %>
+          <article class="train-item-sleep-recode">
+            <div class="date">
+              <%=recode.created_at.strftime("%Y/%m/%d")%>
+            </div>
+            <div class="recode-content">
+              <%=recode.sleep%>
+            </div>
+            <%=link_to("/users/#{recode.id}/train_edit" ,class: "setting") do %>
+              <span class="fa-solid fa-gear fa-lg"></span>
+            <% end %>
+           </article>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="train-form">
+      <%=form_with url: "/users/#{@user.id}/train_form" do |form|%>
+        <%=form.select :type, [["トレーニング",1],["食事",2],["睡眠",3]], {},{class: "train-form-select"}%>
+        <%=form.button "記録する"%>
+        <%=form.text_area :content %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+  $(function() {
+    $(".train-item-trainning").on("click",function(){
+        $(".train-recode").removeClass("none");
+        $(".food-recode").addClass("none");
+        $(".sleep-recode").addClass("none");
+    })
+    $(".train-item-food").on("click",function(){
+        $(".food-recode").removeClass("none");
+        $(".train-recode").addClass("none");
+        $(".sleep-recode").addClass("none");
+    })
+    $(".train-item-sleep").on("click",function(){
+        $(".sleep-recode").removeClass("none");
+        $(".food-recode").addClass("none");
+        $(".train-recode").addClass("none");
+    })
+  })
+</script>

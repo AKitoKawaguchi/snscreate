@@ -1,0 +1,2 @@
+class Trainrecode < ApplicationRecord
+end

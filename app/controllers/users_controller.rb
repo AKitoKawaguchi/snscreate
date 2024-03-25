@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :ensure_user_id,{only:[:mypage]}
   before_action :ensure_correct_user,{only:[:edit,:update]}
-  
+
   def new
     @user = User.new
   end
@@ -56,14 +56,13 @@ class UsersController < ApplicationController
   end
 
   def login
-    @user = User.find_by(name: params[:name], email: params[:email], password: params[:password])
+    @user = User.find_by(email: params[:email], password: params[:password])
     if @user
       flash[:notice] = "ログインしました"
       session[:user_id] = @user.id
       redirect_to("/users/#{@user.id}")
     else
-      @error_message = "ユーザ名またはパスワードが違います"
-      @name = params[:name]
+      @error_message = "メールアドレスまたはパスワードが違います"
       @email = params[:email]
       @password = params[:password]
       render("users/login_form",status: 303)
@@ -74,6 +73,55 @@ class UsersController < ApplicationController
     session[:user_id] = nil
     flash[:notice] = "ログアウトしました"
     redirect_to("/login")
+  end
+
+  def train
+    @trainning_recodes = Trainrecode.where(user_id:params[:id],food:nil,sleep:nil)
+    @food_recodes = Trainrecode.where(user_id:params[:id],trainnig:nil,sleep:nil)
+    @sleep_recodes = Trainrecode.where(user_id:params[:id],food:nil,trainnig:nil)
+    @user = User.find_by(id:params[:id])
+  end
+
+  def train_form
+    if params[:type].to_i == 1
+      @recode =Trainrecode.new(
+        user_id: params[:id],
+        trainnig: params[:content]
+      )
+    elsif params[:type].to_i == 2
+      @recode = Trainrecode.new(
+        user_id: params[:id],
+        food: params[:content]
+      )
+    elsif params[:type].to_i == 3
+      @recode = Trainrecode.new(
+        user_id: params[:id],
+        sleep: params[:content]
+      )
+    end
+    @recode.save
+    redirect_to("/users/#{@recode.user_id}/train")
+  end
+
+  def train_edit
+    @recode = Trainrecode.find_by(id:params[:recode_id])
+    if @content = @recode.trainnig
+    elsif @content = @recode.food
+    elsif @content = @recode.sleep
+    end
+  end
+
+  def recode_edit
+    @recode = Trainrecode.find_by(id:params[:recode_id])
+    if @recode.trainnig
+      @recode.trainnig = params[:recontent]
+    elsif @recode.food
+      @recode.food = params[:recontent]
+    elsif @recode.sleep
+      @recode.sleep = params[:recontent]
+    end
+    @recode.save
+    redirect_to("/users/#{@recode.user_id}/train")
   end
 
   def ensure_user_id

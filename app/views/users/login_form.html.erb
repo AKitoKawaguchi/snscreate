@@ -8,13 +8,9 @@
        <% end %>
         <div class="login-form">
           <%=form_tag("/login") do%>
-            <p>ユーザ名</p>
-            <input name="name" value="<%=@name%>">
-            <p>メールアドレス</p>
-            <input name="email" value="<%=@email%>">
-            <p>パスワード(6文字以上12文字以下の英数字)</p>
-            <input name="password" value="<%=@password%>">
-            <input type="submit" value="ログイン">
+            <input class="input" name="email" placeholder="メールアドレス" value="<%=@email%>">
+            <input class="input" name="password" placeholder="パスワード(6文字以上12文字以下の英数字)" value="<%=@password%>">
+            <input class="login-button"type="submit" value="login">
           <% end %>
         </div>
     </div>

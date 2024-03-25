@@ -3,16 +3,13 @@
       <div class="signup">Signup</div>
         <div class="signup-form">
           <%=form_tag("/users/create") do%>
-            <p>ユーザ名</p>
-            <input name="name" value="<%=@user.name%>">
-            <p>メールアドレス</p>
+            <input class="input" name="name" placeholder="ユーザー名" value="<%=@user.name%>">            
             <% @user.errors.full_messages.each do |message|%>
                 <%=message %>
             <%  end %>
-            <input name="email" value="<%=@user.email%>">
-            <p>パスワード(6文字以上12文字以下の英数字)</p>
-            <input name="password" value="<%=@user.password%>">
-            <input type="submit" value="新規登録">
+            <input class="input" name="email" placeholder="メールアドレス" value="<%=@user.email%>">
+            <input class="input" name="password" placeholder="パスワード(6文字以上12文字以下の英数字)" value="<%=@user.password%>">
+            <input class="signup-button" type="submit" value="signup">
           <% end %>
         </div>
     </div>
