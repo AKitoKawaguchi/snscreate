@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :ensure_user_id,{only:[:mypage]}
-  before_action :ensure_correct_user,{only:[:edit,:update]}
+  before_action :ensure_correct_user,{only:[:edit,:update,:train,:train_form,:train_edit,:recode_edit]}
 
   def new
     @user = User.new
@@ -53,6 +53,7 @@ class UsersController < ApplicationController
   end
 
   def login_form
+    session[:user_id] = nil
   end
 
   def login
@@ -124,6 +125,11 @@ class UsersController < ApplicationController
     redirect_to("/users/#{@recode.user_id}/train")
   end
 
+  def train_destory
+    @recode = Trainrecode.find_by(id:params[:recode_id])
+    @recode.destroy
+    redirect_to("/users/#{@recode.user_id}/train")
+  end
   def ensure_user_id
     unless session[:user_id]
       flash[:notice] = "権限がありません"

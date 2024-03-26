@@ -1,0 +1,33 @@
+.notification-index-item{
+    position: relative;
+    padding: 0px 20px 0 0;
+    height: 250px;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0 2px 6px #c1ced7;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+}
+
+.notification-index{
+    grid-row: 1/2;
+    grid-column: 2/6;
+    text-align: left;
+    line-height: 80px;
+    font-size: 24px;
+}
+
+.notification-item{
+    position: relative;
+    padding: 0px 20px 0 0;
+    height: 120px;
+    background-color: rgb(252, 242, 228);
+    overflow: hidden;
+    box-shadow: 0 2px 6px #c1ced7;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+}

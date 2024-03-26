@@ -3,6 +3,8 @@ class Like < ApplicationRecord
     validates :post_id, {presence: true}
 
     has_many :notifications,dependent: :destroy
+    belongs_to :post
+    belongs_to :user
 
     def post
         return Post.find_by(id:self.post_id)

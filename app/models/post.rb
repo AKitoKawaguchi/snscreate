@@ -1,8 +1,10 @@
 class Post < ApplicationRecord
     validates :user_id,{presence: true}
+    has_many :likes, dependent: :destroy
     has_many :hashtag_posts, dependent: :destroy
     has_many :hashtags, through: :hashtag_posts
     has_many :notifications, class_name: "Notification", foreign_key: "comment_id", dependent: :destroy
+    belongs_to :user
 
     def user
         return User.find_by(id:self.user_id)

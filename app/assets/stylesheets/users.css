@@ -2,6 +2,7 @@
    width: 250px;
    height: 250px;
    object-fit: cover;
+   border-radius: 250px;
 }
 .users-login,.users-new{
     background-color: rgba(0,0,0,0.1);
@@ -74,9 +75,9 @@
     display: block;
     border: none;
     background-color: mediumaquamarine;
-    font-size: large;
+    font-size: 15px;
     color: white;
-    width: 150px;
+    width: 180px;
     height: 40px;
     border-radius: 15px;
     margin: 20px 0;
@@ -320,12 +321,12 @@ label{
     background-color: rgb(252, 242, 228) !important;
   }
 
-  .train-item-trainning,.train-item-food,.train-item-sleep{
+  .train-item-trainning{
     float: left;
     width: 33.3%;
     padding: 20px 0px;
     margin: 0px 0px;
-    background-color: rgb(230, 228, 228);
+    background-color: rgb(127, 113, 255,0.6);
     overflow: hidden;
     box-shadow: 0px 0px 2px #c1ced7;
     text-align: center;
@@ -333,24 +334,91 @@ label{
     font-size: 18px;
    }
 
-   .train-item-trainning-recode,.train-item-food-recode,.train-item-sleep-recode{
+   .fa-dumbbell{
+    color: white;
+   }
+
+   .train-item-food{
+    float: left;
+    width: 33.3%;
+    padding: 20px 0px;
+    margin: 0px 0px;
+    background-color: rgb(244, 108, 108,0.6);
+    overflow: hidden;
+    box-shadow: 0px 0px 2px #c1ced7;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+   }
+
+   .fa-bowl-food{
+    color: white;
+   }
+
+   .train-item-sleep{
+    float: left;
+    width: 33.3%;
+    padding: 20px 0px;
+    margin: 0px 0px;
+    background-color: rgb(217, 101, 249,0.6);
+    overflow: hidden;
+    box-shadow: 0px 0px 2px #c1ced7;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+   }
+
+   .fa-moon{
+    color: white;
+   }
+
+   .train-item-trainning-recode{
     position: relative;
     padding: 10px 20px;
     margin: 0 auto;
-    background-color: white;
+    background-color: rgb(127, 113, 255);
     overflow: hidden;
     box-shadow: 0px 2px 6px #c1ced7;
     text-align: left;
     box-sizing: border-box;
     width: 100%;
     height: 150px;
+    color: white;
+   }
+
+   .train-item-food-recode{
+    position: relative;
+    padding: 10px 20px;
+    margin: 0 auto;
+    background-color: rgb(244, 108, 108);
+    overflow: hidden;
+    box-shadow: 0px 2px 6px #c1ced7;
+    text-align: left;
+    box-sizing: border-box;
+    width: 100%;
+    height: 150px;
+    color: white;
+   }
+
+   .train-item-sleep-recode{
+    position: relative;
+    padding: 10px 20px;
+    margin: 0 auto;
+    background-color: rgb(217, 101, 249);
+    overflow: hidden;
+    box-shadow: 0px 2px 6px #c1ced7;
+    text-align: left;
+    box-sizing: border-box;
+    width: 100%;
+    height: 150px;
+    color: white;
    }
 
    .train-recode,.food-recode,.sleep-recode{
     height: 360px;
     overflow-y: auto;
    }
-.setting{
+.train-option{
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -382,4 +450,8 @@ label{
     border: 3px solid #077485;
     margin-top:  0;
     margin-bottom: 10px;
+  }
+
+  .dark{
+    background-color: rgb(70, 180, 143) !important;
   }

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   post "users/:id/train_form" => "users#train_form"
   get "users/:recode_id/train_edit" => "users#train_edit"
   post "users/:recode_id/recode_edit" => "users#recode_edit"
+  post "users/:recode_id/train_destroy" => "users#train_destory"
   post "likes/:post_id/create" => "likes#create"
   post "likes/:post_id/destroy" => "likes#destroy"
   post "favs/:user_id/follow" => "favs#follow"

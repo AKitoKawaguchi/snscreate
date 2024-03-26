@@ -29,14 +29,16 @@
     </div>
     <div class="mypage-section2">
     <div class="flex">
+      <% if @current_user.id == @user.id%>
       <div class="stop">
-        <button class="start">start</button>
+        <button class="start">トレーニングを開始する</button>
         <% if @current_user.id == @user.id%>
           <%=link_to("/users/#{@user.id}/train") do%>
-            <button class="start">詳細</button>
+            <button class="start">詳細を記録する</button>
           <% end %>
         <% end %>
       </div>
+      <% end %>
     <div class="train">
       <div class="train-title">
         トレーニングカレンダー
@@ -196,7 +198,7 @@
         <div class="posts-mypage-like" data-like-id="<%=like.post.to_json%>">
         <div class="postname">
           <%=link_to(like.post.user.name,"/users/#{like.post.user.id}")%>
-          <%=image_tag "/user_images/#{like.post.user.image_name}", size: "50x50", style: "object-fit:cover;" %>
+          <%=image_tag "/user_images/#{like.post.user.image_name}", size: "50x50", style: "object-fit:cover; border-radius:50px;" %>
         </div>
         <div class="post-index">
           <%=render_with_hashtags(like.post.content)%>
@@ -255,10 +257,10 @@
             <% elsif notification.action == "comment"%>
               <% comment = Post.find_by(id:notification.comment_id)%>
             <% end %>
-            <%=image_tag "/user_images/#{visitor.image_name}", size: "40x40", style: "object-fit:cover;"%>
+            <%=image_tag "/user_images/#{visitor.image_name}", size: "40x40", style: "object-fit:cover; border-radius:40px;"%>
             <% case notification.action %>
               <% when "follow" then %>
-                <%=link_to(visitor.name,"/users/#{visitor.id}")%>があなたをフォローしました<%=notification.created_at%>
+                <%=link_to visitor.name,"/users/#{visitor.id}", style: "color: mediumaquamarine; font-weight: bold;"%>があなたをフォローしました
                 <% if (Time.zone.now-notification.created_at).floor/60 < 60 %>
                   <%=(Time.zone.now-notification.created_at).floor/60%>分前
                 <% elsif (Time.zone.now-notification.created_at).floor/60 >= 60%>
@@ -379,16 +381,18 @@
     var i;
     $(".train-month-2").text(`${today.getMonth()+1}月`);
     $(".start").on("click",function(){
-        if ($(this).text() == "start"){
+        if ($(this).text() == "トレーニングを開始する"){
             if (i && i != today.getDate()){
                 totaltime = 0;
             }
             now1 = new Date();
             time1 = now1.getHours()*60+now1.getMinutes();
-            $(this).text("stop");
+            $(this).text("トレーニングをやめる");
+            $(this).toggleClass("dark");
         }
         else{
-            $(this).text("start");
+            $(this).text("トレーニングを開始する");
+            $(this).toggleClass("dark");
             now2 = new Date();
             var now = new Date();
             i = now.getDate();

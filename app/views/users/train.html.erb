@@ -2,13 +2,13 @@
   <div class="container">
     <div>
       <div class="train-item-trainning">
-        トレーニング
+       <span class="fa-solid fa-dumbbell fa-lg"></span>
       </div>
       <div class="train-item-food">
-        食事
+        <span class="fa-solid fa-bowl-food fa-lg"></span>
       </div>
       <div class="train-item-sleep">
-       睡眠
+       <span class="fa-solid fa-moon fa-lg"></span>
       </div>
     </div>
     <div class="clear">
@@ -23,9 +23,14 @@
             <div class="recode-content">
               <%=recode.trainnig%>
             </div>
-            <%=link_to("/users/#{recode.id}/train_edit" ,class: "setting") do %>
-              <span class="fa-solid fa-gear fa-lg"></span>
-            <% end %>
+            <div class="train-option">
+              <%=link_to("/users/#{recode.id}/train_destroy", data:{turbo_method: :post}) do%>
+                <span class="fa-solid fa-trash" style="color:white;"></spna>
+              <% end %>
+              <%=link_to("/users/#{recode.id}/train_edit") do %>
+                <span class="fa-solid fa-gear fa-lg" style="color:white;"></span>
+              <% end %>
+            </div>
            </article>
         <% end %>
       <% end %>
@@ -40,9 +45,14 @@
             <div class="recode-content">
               <%=recode.food%>
             </div>
-            <%=link_to("/users/#{recode.id}/train_edit" ,class: "setting") do %>
-              <span class="fa-solid fa-gear fa-lg"></span>
-            <% end %>
+            <div class="train-option">
+              <%=link_to("/users/#{recode.id}/train_destroy",data:{turbo_method: :post}) do%>
+                <span class="fa-solid fa-trash" style="color:white;"></spna>
+              <% end %>
+              <%=link_to("/users/#{recode.id}/train_edit") do %>
+                <span class="fa-solid fa-gear fa-lg" style="color:white;"></span>
+              <% end %>
+            </div>
            </article>
         <% end %>
       <% end %>
@@ -57,9 +67,14 @@
             <div class="recode-content">
               <%=recode.sleep%>
             </div>
-            <%=link_to("/users/#{recode.id}/train_edit" ,class: "setting") do %>
-              <span class="fa-solid fa-gear fa-lg"></span>
-            <% end %>
+            <div class="train-option">
+              <%=link_to("/users/#{recode.id}/train_destroy",data:{turbo_method: :post}) do%>
+                <span class="fa-solid fa-trash" style="color:white;"></spna>
+              <% end %>
+              <%=link_to("/users/#{recode.id}/train_edit") do %>
+                <span class="fa-solid fa-gear fa-lg" style="color:white;"></span>
+              <% end %>
+            </div>
            </article>
         <% end %>
       <% end %>
@@ -75,17 +90,27 @@
 </div>
 <script>
   $(function() {
+    $(".train-item-trainning").css("background-color","rgb(127, 113, 255)");
     $(".train-item-trainning").on("click",function(){
+        $(this).css("background-color","rgb(127, 113, 255)");
+        $(".train-item-food").css("background-color","");
+        $(".train-item-sleep").css("background-color","");
         $(".train-recode").removeClass("none");
         $(".food-recode").addClass("none");
         $(".sleep-recode").addClass("none");
     })
     $(".train-item-food").on("click",function(){
+        $(this).css("background-color","rgb(244, 108, 108)");
+        $(".train-item-trainning").css("background-color","");
+        $(".train-item-sleep").css("background-color","");
         $(".food-recode").removeClass("none");
         $(".train-recode").addClass("none");
         $(".sleep-recode").addClass("none");
     })
     $(".train-item-sleep").on("click",function(){
+        $(this).css("background-color","rgb(217, 101, 249)");
+        $(".train-item-trainning").css("background-color","");
+        $(".train-item-food").css("background-color","");
         $(".sleep-recode").removeClass("none");
         $(".food-recode").addClass("none");
         $(".train-recode").addClass("none");

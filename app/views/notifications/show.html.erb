@@ -1,3 +1,102 @@
 <div class="main main-notification">
-<%=@notification.id%>
+    <article class="notification-index-item">
+        <div class="postname">
+          <%= link_to(@notification.visited.name,"/users/#{@notification.visited.id}")%>
+          <%=image_tag "/user_images/#{@notification.visited.image_name}", size: "80x80", style: "object-fit:cover; border-radius:80px;"%>
+          </div>
+          <% if @notification.action == "follow"%>
+            <div class="notification-index">
+              <%=@notification.visited.profile%>
+            </div>
+          <% end %>
+          <% if @notification.action == "comment"%>
+          <div class="notification-index" data-notification-id="<%=Post.find_by(id:@notification.comment.tocomment).id%>">
+          <%=render_with_hashtags(Post.find_by(id:@notification.comment.tocomment).content)%>
+          </div>
+        <div class="post-option">
+          <% comments = Post.where(tocomment:@notification.comment.tocomment)%>
+          <div class="comment">
+            <%=link_to("/main/#{@notification.comment.tocomment}/comment") do %>
+              <span class="fa-regular fa-comment"></span>
+            <% end %> 
+              <%=comments.count %>
+          </div>
+          <div class="like">
+          <% if Like.find_by(user_id:@current_user.id,post_id:@notification.comment.tocomment) %>
+            <%=link_to("/likes/#{@notification.comment.tocomment}/destroy",data:{turbo_method: :post}) do %>
+              <span class="fa-solid fa-heart"></span>
+            <% end %>
+          <% else %>
+            <%=link_to("/likes/#{@notification.comment.tocomment}/create",data:{turbo_method: :post}) do %>
+              <span class="fa-regular fa-heart"></span>
+            <% end %>
+          <% end %>
+            <%=Like.where(post_id:@notification.comment.tocomment).count%>
+          </div>
+        </div>
+        <% end %>
+          <% if @notification.action == "like"%>
+          <div class="notification-index" data-notification-id="<%=@notification.like.post_id%>">
+          <%=render_with_hashtags(@notification.like.post.content)%>
+          </div>
+        <div class="post-option">
+          <% comments = Post.where(tocomment:@notification.like.post_id)%>
+          <div class="comment">
+            <%=link_to("/main/#{@notification.like.post_id}/comment") do %>
+              <span class="fa-regular fa-comment"></span>
+            <% end %> 
+              <%=comments.count %>
+          </div>
+          <div class="like">
+          <% if Like.find_by(user_id:@current_user.id,post_id:@notification.like.post_id) %>
+            <%=link_to("/likes/#{@notification.like.post_id}/destroy",data:{turbo_method: :post}) do %>
+              <span class="fa-solid fa-heart"></span>
+            <% end %>
+          <% else %>
+            <%=link_to("/likes/#{@notification.like.post_id}/create",data:{turbo_method: :post}) do %>
+              <span class="fa-regular fa-heart"></span>
+            <% end %>
+          <% end %>
+            <%=Like.where(post_id:@notification.like.post_id).count%>
+          </div>
+        </div>
+        <% end %>
+    </article>
+    <article class="notification-item">
+      <div class="postname">
+        <%= link_to(@notification.visitor.name,"/users/#{@notification.visitor.id}")%>
+        <%=image_tag "/user_images/#{@notification.visitor.image_name}", size: "80x80", style: "object-fit:cover; border-radius:80px;"%>
+      </div>
+      <% if @notification.action != "comment"%>
+        <div class="post-index">
+          <%=@notification.visitor.profile%>
+        </div>
+      <% else %>
+        <div class="post-index" data-comment-id="<%=@notification.comment_id%>">
+          <%=render_with_hashtags(@notification.comment.content)%>
+        </div>
+      <% end %>
+    </article>
 </div>
+
+<script>
+  $(function(){
+    $(".notification-index-item").on("click",function(e){
+        notification = $(".notification-index").data("notification-id");
+        if (!$(e.target).closest("a").length){
+            if (notification){
+                window.location.href = `/main/${notification}`;
+            }
+        }
+    });
+
+    $(".notification-item").on("click",function(e){
+        notification = $(".post-index").data("comment-id");
+        if (!$(e.target).closest("a").length){
+            if (notification){
+                window.location.href = `/main/${notification}`;
+            }
+        }
+    });
+  })
+</script>
