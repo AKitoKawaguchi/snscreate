@@ -2,14 +2,44 @@
   <% if @perfectusers %>
   <% @perfectusers.each do |user| %>
     <div class="search-user">
-    <%=user.name%>
+      <div class="search-name">
+      <%=link_to(user.name,"/users/#{user.id}")%>
+        <%=image_tag "/user_images/#{user.image_name}", style: "object-fit:cover;" %>
+      </div>
+      <div class="search-profile">
+          <%=user.profile%>
+      </div>
+      <div class="search-follow">
+          <% if @current_user.id != user.id%>
+            <% if Fav.find_by(follow:@current_user.id,follower:user.id) %>
+              <%=link_to("フォロー解除","/favs/#{user.id}/unfollow",class: "follow",data:{turbo_method: :post})%>
+            <% else %>
+              <%=link_to("フォロー","/favs/#{user.id}/follow",class: "follow",data:{turbo_method: :post})%>
+            <% end %>
+          <% end %>
+      </div>
     </div>
   <% end %>
   <% end %>
   <% if @particalusers %>
   <% @particalusers.each do |user| %>
     <div class="search-user">
-    <%=user.name%>
+      <div class="search-name">
+        <%=link_to(user.name,"/users/#{user.id}")%>
+        <%=image_tag "/user_images/#{user.image_name}", style: "object-fit:cover;" %>
+      </div>
+      <div class="search-profile">
+          <%=user.profile%>
+      </div>
+      <div class="search-follow">
+          <% if @current_user.id != user.id%>
+            <% if Fav.find_by(follow:@current_user.id,follower:user.id) %>
+              <%=link_to("フォロー解除","/favs/#{user.id}/unfollow",class: "follow",data:{turbo_method: :post})%>
+            <% else %>
+              <%=link_to("フォロー","/favs/#{user.id}/follow",class: "follow",data:{turbo_method: :post})%>
+            <% end %>
+          <% end %>
+      </div>
     </div>
   <% end %>
   <% end %>

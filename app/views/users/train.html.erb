@@ -1,6 +1,7 @@
 <div class="main users-train">
   <div class="container">
     <div>
+    <div class="float">
       <div class="train-item-trainning">
        <span class="fa-solid fa-dumbbell fa-lg"></span>
       </div>
@@ -10,8 +11,6 @@
       <div class="train-item-sleep">
        <span class="fa-solid fa-moon fa-lg"></span>
       </div>
-    </div>
-    <div class="clear">
     </div>
     <div class="train-recode">
       <% if @trainning_recodes%>
@@ -93,6 +92,9 @@
     $(".train-item-trainning").css("background-color","rgb(127, 113, 255)");
     $(".train-item-trainning").on("click",function(){
         $(this).css("background-color","rgb(127, 113, 255)");
+        $(this).css("width","90%");
+        $(".train-item-food").css("width","10%");
+        $(".train-item-sleep").css("width","10%");
         $(".train-item-food").css("background-color","");
         $(".train-item-sleep").css("background-color","");
         $(".train-recode").removeClass("none");
@@ -101,6 +103,9 @@
     })
     $(".train-item-food").on("click",function(){
         $(this).css("background-color","rgb(244, 108, 108)");
+        $(this).css("width","90%");
+        $(".train-item-trainning").css("width","10%");
+        $(".train-item-sleep").css("width","10%");
         $(".train-item-trainning").css("background-color","");
         $(".train-item-sleep").css("background-color","");
         $(".food-recode").removeClass("none");
@@ -109,6 +114,9 @@
     })
     $(".train-item-sleep").on("click",function(){
         $(this).css("background-color","rgb(217, 101, 249)");
+        $(this).css("width","90%");
+        $(".train-item-trainning").css("width","10%");
+        $(".train-item-food").css("width","10%");
         $(".train-item-trainning").css("background-color","");
         $(".train-item-food").css("background-color","");
         $(".sleep-recode").removeClass("none");

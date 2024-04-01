@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :ensure_user_id,{only:[:mypage]}
-  before_action :ensure_correct_user,{only:[:edit,:update,:train,:train_form,:train_edit,:recode_edit]}
+  before_action :ensure_correct_user,{only:[:edit,:update,:train,:train_form]}
+  before_action :ensure_train_user,{only:[:train_edit,:train_destroy,:recode_edit]}
 
   def new
     @user = User.new
@@ -125,7 +126,7 @@ class UsersController < ApplicationController
     redirect_to("/users/#{@recode.user_id}/train")
   end
 
-  def train_destory
+  def train_destroy
     @recode = Trainrecode.find_by(id:params[:recode_id])
     @recode.destroy
     redirect_to("/users/#{@recode.user_id}/train")
@@ -139,6 +140,13 @@ class UsersController < ApplicationController
 
   def ensure_correct_user
     if @current_user.id != params[:id].to_i
+      flash[:notice] = "権限がありません"
+      redirect_to("/main/index")
+    end
+  end
+
+  def ensure_train_user
+    if @current_user.id != Trainrecode.find_by(id:params[:recode_id]).user_id
       flash[:notice] = "権限がありません"
       redirect_to("/main/index")
     end

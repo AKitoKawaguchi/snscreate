@@ -1,5 +1,5 @@
 class MainController < ApplicationController
-  before_action :ensure_user_id,{only:[:index,:show,:new,:create,:destroy,:comment,:reply,:hashtag]}
+  before_action :ensure_user_id,{only:[:index,:show,:create,:destroy,:reply,:hashtag]}
   def index
     @posts = Post.all.order(created_at: :desc)
   end
@@ -10,14 +10,10 @@ class MainController < ApplicationController
     @comments = Post.where(tocomment:@post.id)
   end
 
-  def new
-    @post = Post.new
-  end
 
   def create
     @post = Post.new(
       content: params[:content],
-      like: params[:like],
       user_id: @current_user.id,
     )
     extract_hashtag_from_text(params[:content]).each do |tag|
@@ -47,9 +43,6 @@ class MainController < ApplicationController
     redirect_to("/main/index")
   end
 
-  def comment
-    @post = Post.find_by(id:params[:id])
-  end
 
   def reply
     @post = Post.new(

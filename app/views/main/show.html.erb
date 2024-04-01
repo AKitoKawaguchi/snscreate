@@ -3,28 +3,16 @@
       <div class="post-show-content">
         <div class="postname-show">
           <%= link_to(@user.name,"/users/#{@user.id}") %>
+          <%=image_tag "/user_images/#{@user.image_name}", size: "80x80", style: "object-fit:cover; border-radius: 80px;" %>
         </div>
         <div class="post-index-show">
-          <% if @post.like%>
-          <% integer = @post.like.floor%>
-          <div class="star">
-            <% integer.times do |i|%>
-                <span class="fa-solid fa-star"></span>
-            <% end %>
-            <% unless @post.like - integer == 0 %>
-                <span class="fa-solid fa-star-half"></span>
-            <% end %>
-          </div>
-          <% end %>
           <div class="hashtag">
             <%= render_with_hashtags(@post.content) %>
           </div>
         </div>
        <div class="show-option">
         <div class="comment">
-          <%=link_to("/main/#{@post.id}/comment") do %>
-            <span class="fa-regular fa-comment"></span>
-          <% end %> 
+          <span class="fa-regular fa-comment"></span>
           <%=@comments.count %>
         </div>
        <div class="like">
@@ -51,13 +39,74 @@
     </div>
       <% @comments.each_with_index do |comment,i|%>
         <% if i == 0%>
-          <span class="fa-solid fa-arrow-down-long fa-2x"></span>
+          <div class="reply-row">
+            <span class="fa-solid fa-ellipsis-vertical fa-reply fa-lg"></sapn>
+          </div>
         <% end %>
         <div class="comment-list" data-comment-id="<%= comment.to_json %>">
-        <%= link_to(comment.user.name,"/users/#{comment.user.id}") %>
-          <%=render_with_hashtags(comment.content)%>
+          <div class="comment-name">
+            <%= link_to(comment.user.name,"/users/#{comment.user.id}") %>
+            <%=image_tag "/user_images/#{comment.user.image_name}", size: "40x40", style: "object-fit:cover; border-radius: 40px;" %>
+          </div>
+          <div class="comment-index-content">
+            <%=render_with_hashtags(comment.content)%>
+          </div>
+          <div class="show-option">
+            <div class="comment">
+              <span class="fa-regular fa-comment"></span>
+              <%=Post.where(tocomment:comment.id).count %>
+            </div>
+          <div class="like">
+            <% if Like.find_by(user_id:@current_user.id,post_id:comment.id) %>
+              <%=link_to("/likes/#{comment.id}/destroy",data:{turbo_method: :post}) do %>
+              <span class="fa-solid fa-heart"></span>
+              <% end %>
+            <% else %>
+              <%=link_to("/likes/#{comment.id}/create",data:{turbo_method: :post}) do %>
+                <span class="fa-regular fa-heart"></span>
+              <% end %>
+            <% end %>
+            <%=Like.where(post_id:comment.id).count%>
+          </div>
+          <% if @current_user.id == comment.user.id%>
+            <div class="dstroy">
+              <%=link_to("/main/#{comment.id}/destroy",data:{turbo_method: :post}) do %>
+                <span class="fa-solid fa-trash"></span>
+              <% end %>
+            </div>
+          <% end %>
+          </div>
         </div>
       <% end %>
+      <div class="post-new">
+        <div class="post-new-index">
+          <i class="fa fa-lg fa-times"></i>
+          <div class="comment-flex">
+            <div class="comment-username">
+              <%= link_to(@post.user.name,"/users/#{@post.user.id}") %>
+              <%=image_tag "/user_images/#{@post.user.image_name}", size: "60x60", style: "object-fit:cover; border-radius: 60px;" %>
+            </div>
+            <div class="comment-content">
+              <%=@post.content%>
+            </div>
+          </div>
+          <div class="comment-row">
+            <i class="fa-solid fa-ellipsis-vertical fa-com fa-lg"></i>
+          </div>
+          <div class="comment-reply-flex">
+            <div class="comment-username">
+              <%= link_to(@current_user.name,"/users/#{@current_user.id}") %>
+              <%=image_tag "/user_images/#{@current_user.image_name}", size: "80x80", style: "object-fit:cover; border-radius: 80px;" %>
+            </div>
+            <div class="comment-content">
+              <%=form_with url: "/main/#{@post.id}/reply" do |form|%>
+              <%=form.text_area :comment%>
+            </div>
+          </div>
+                <%=form.button "投稿する"%>
+              <% end %>
+        </div>
+      </div>
 </div>
 
 <script type="text/javascript">
@@ -68,5 +117,13 @@
             window.location.href = `/main/${comment.id}`
         }
     });
+
+    $(".fa-comment").on("click",function(){
+      $(".post-new").fadeIn();
+    })
+
+    $(".fa-times").on("click",function(){
+      $(".post-new").fadeOut();
+    })
     })
 </script>

@@ -1,8 +1,8 @@
 <div class="main main-notification">
     <article class="notification-index-item">
-        <div class="postname">
+        <div class="notification-name">
           <%= link_to(@notification.visited.name,"/users/#{@notification.visited.id}")%>
-          <%=image_tag "/user_images/#{@notification.visited.image_name}", size: "80x80", style: "object-fit:cover; border-radius:80px;"%>
+          <%=image_tag "/user_images/#{@notification.visited.image_name}", style: "object-fit:cover;"%>
           </div>
           <% if @notification.action == "follow"%>
             <div class="notification-index">
@@ -13,7 +13,7 @@
           <div class="notification-index" data-notification-id="<%=Post.find_by(id:@notification.comment.tocomment).id%>">
           <%=render_with_hashtags(Post.find_by(id:@notification.comment.tocomment).content)%>
           </div>
-        <div class="post-option">
+        <div class="notification-option">
           <% comments = Post.where(tocomment:@notification.comment.tocomment)%>
           <div class="comment">
             <%=link_to("/main/#{@notification.comment.tocomment}/comment") do %>
@@ -39,7 +39,7 @@
           <div class="notification-index" data-notification-id="<%=@notification.like.post_id%>">
           <%=render_with_hashtags(@notification.like.post.content)%>
           </div>
-        <div class="post-option">
+        <div class="notification-option">
           <% comments = Post.where(tocomment:@notification.like.post_id)%>
           <div class="comment">
             <%=link_to("/main/#{@notification.like.post_id}/comment") do %>
@@ -63,17 +63,38 @@
         <% end %>
     </article>
     <article class="notification-item">
-      <div class="postname">
+      <div class="notification-name notification2">
         <%= link_to(@notification.visitor.name,"/users/#{@notification.visitor.id}")%>
-        <%=image_tag "/user_images/#{@notification.visitor.image_name}", size: "80x80", style: "object-fit:cover; border-radius:80px;"%>
+        <%=image_tag "/user_images/#{@notification.visitor.image_name}", style: "object-fit:cover;"%>
       </div>
       <% if @notification.action != "comment"%>
-        <div class="post-index">
+        <div class="notification-index">
           <%=@notification.visitor.profile%>
         </div>
       <% else %>
-        <div class="post-index" data-comment-id="<%=@notification.comment_id%>">
+        <div class="notification-index2" data-comment-id="<%=@notification.comment_id%>">
           <%=render_with_hashtags(@notification.comment.content)%>
+        </div>
+        <div class="notification-option">
+          <% comments = Post.where(tocomment:@notification.comment_id)%>
+          <div class="comment">
+            <%=link_to("/main/#{@notification.comment_id}/comment") do %>
+              <span class="fa-regular fa-comment"></span>
+            <% end %> 
+              <%=comments.count %>
+          </div>
+          <div class="like">
+          <% if Like.find_by(user_id:@current_user.id,post_id:@notification.comment_id) %>
+            <%=link_to("/likes/#{@notification.comment_id}/destroy",data:{turbo_method: :post}) do %>
+              <span class="fa-solid fa-heart"></span>
+            <% end %>
+          <% else %>
+            <%=link_to("/likes/#{@notification.comment_id}/create",data:{turbo_method: :post}) do %>
+              <span class="fa-regular fa-heart"></span>
+            <% end %>
+          <% end %>
+            <%=Like.where(post_id:@notification.comment_id).count%>
+          </div>
         </div>
       <% end %>
     </article>
@@ -91,7 +112,7 @@
     });
 
     $(".notification-item").on("click",function(e){
-        notification = $(".post-index").data("comment-id");
+        notification = $(".notification-index2").data("comment-id");
         if (!$(e.target).closest("a").length){
             if (notification){
                 window.location.href = `/main/${notification}`;

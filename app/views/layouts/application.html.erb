@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>BookApp</title>
+    <title>筋SNS</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -9,7 +9,7 @@
     <%= stylesheet_link_tag "application", media:"all", "data-turbo-track": "reload" %>
     <link href="https://use.fontawesome.com/releases/v6.5.1/css/all.css" rel="stylesheet">
     <%= javascript_importmap_tags %>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
   </head>
@@ -34,12 +34,24 @@
     </li>
     <li>
     <% if @notifications.where(checked:false).size == 0%>
-      <span class="fa-regular fa-bell"></span>
+      <span class="fa-solid fa-bell"></span>
     <% else %>
       <span class="fa-solid fa-bell"></span>
+      <i class="fa-solid fa-circle"></i>
     <% end %>
     </li>
   </ul>
+  <div class="header-bar1">
+    <span class="fa fa-bars fa-lg"></>
+  </div>
+  <div class="bell">
+    <% if @notifications.where(checked:false).size == 0%>
+      <span class="fa-solid fa-bell"></span>
+    <% else %>
+      <span class="fa-solid fa-bell"></span>
+      <i class="fa-solid fa-circle"></i>
+    <% end %>
+  </div>
   <% else %>
   <ul class="header-menus">
     <li>
@@ -49,10 +61,41 @@
     <%=link_to("ログイン","/login")%>
     </li>
   </ul>
+  <div class="header-bar2">
+    <span class="fa fa-bars fa-lg"></span>
+  </div>
   <% end %>
   </header>
-
   <body>
+  <div class="header-bar1-content none">
+    <div class="header-content">
+      <%=link_to("投稿一覧","/main/index")%>
+    </div>
+    <div class="header-content">
+      <%=link_to("マイページ","/users/#{@current_user.id}")%>
+    </div>
+    <div class="header-content">
+      <%=link_to("ログアウト","/logout",data:{turbo_method: :post})%>
+    </div>
+  </div>
+  <div class="header-bar2-content none">
+    <div class="header-content">
+      <%=link_to("新規登録","/signup")%>
+    </div>
+    <div class="header-content">
+      <%=link_to("ログイン","/login")%>
+    </div>
+  </div>
     <%= yield %>
   </body>
 </html>
+<script>
+  $(function(){
+    $(".header-bar1").on("click",function(){
+      $(".header-bar1-content").toggleClass("none");
+    })
+    $(".header-bar2").on("click",function(){
+      $(".header-bar2-content").toggleClass("none");
+    })
+  })
+</script>

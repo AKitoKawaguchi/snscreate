@@ -1,7 +1,7 @@
 <div class="main main-usersearch">
   <% if @posts %>
   <% @posts.each do |post| %>
-    <% if post.like %>
+    <% if !post.tocomment %>
       <article class="posts-index-item"  data-post-id="<%= post.to_json %>">
         <div class="postname">
           <%= link_to(post.user.name,"/users/#{post.user.id}")%>
@@ -9,15 +9,6 @@
           </div>
           <div class="post-index">
           <%=render_with_hashtags(post.content)%>
-            <% integer = post.like.floor%>
-              <div class="star">
-                <% integer.times do |i|%>
-                  <span class="fa-solid fa-star"></span>
-                <% end %>
-                <% unless post.like - integer == 0 %>
-                  <span class="fa-solid fa-star-half"></span>
-                <% end %>
-              </div>
           </div>
         <div class="post-option">
           <% comments = Post.where(tocomment:post.id)%>

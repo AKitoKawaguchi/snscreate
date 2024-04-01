@@ -32,9 +32,11 @@
       <% if @current_user.id == @user.id%>
       <div class="stop">
         <button class="start">トレーニングを開始する</button>
+        <div id="clock">
+        </div>
         <% if @current_user.id == @user.id%>
           <%=link_to("/users/#{@user.id}/train") do%>
-            <button class="start">詳細を記録する</button>
+            <button class="recode">詳細を記録する</button>
           <% end %>
         <% end %>
       </div>
@@ -122,19 +124,10 @@
     </div>
     <div class="overflow-post">
       <% @user.posts.each do |post|%>
-      <% if post.like %>
+      <% if !post.tocomment %>
       <article class="posts-mypage-post" data-mypage-id="<%= post.to_json %>">
           <div class="post-mypage-content">
             <%=render_with_hashtags(post.content)%>
-          <div class="star">
-            <% integer = post.like.floor%>
-            <% integer.times do |i|%>
-                <span class="fa-solid fa-star"></span>
-            <% end %>
-            <% unless post.like - integer == 0 %>
-                <span class="fa-solid fa-star-half"></span>
-            <% end %>
-          </div>
           </div>
           <div class="post-mypage-option">
             <% comments = Post.where(tocomment:post.id)%>
@@ -240,10 +233,20 @@
     </div>
     </div>
       <div class="mypage-make">
-        <%=link_to "/main/new" do%>
-          <span class="fa-regular fa-square-plus fa-2x"></span>
-        <% end %>
+        <span class="fa-regular fa-square-plus fa-2x"></span>
       </div>
+      <div class="post-new">
+    <div class="post-new-index">
+      <i class="fa fa-lg fa-times"></i>
+      <%=form_with url: "/main/create" do |form|%>
+        <div class="post-flex">
+          <%=image_tag "/user_images/#{@current_user.image_name}", size: "40x40", style: "object-fit:cover; border-radius: 40px;"%>
+          <%=form.text_area :content%>
+        </div>
+        <%=form.button "投稿する"%>
+      <% end %>
+    </div>
+  </div>
   </div>
 </div>
 
@@ -278,7 +281,7 @@
                   <%=(Time.zone.now-notification.created_at).floor/86400%>日前
                 <% end %>
               <% when "comment" then %>
-                <%=link_to visitor.name,"/users/#{visitor.id}",style: "color: mediumaquamarine; font-weight: bold;"%>が<%=link_to "あなたの投稿","/main/#{comment.tocomment}",sytle: "color: mediumaquamarine; font-weight: bold;"%>にコメントしました
+                <%=link_to visitor.name,"/users/#{visitor.id}",style: "color: mediumaquamarine; font-weight: bold;"%>が<%=link_to "あなたの投稿","/main/#{comment.tocomment}",style: "color: mediumaquamarine; font-weight: bold;"%>にコメントしました
                 <% if (Time.zone.now-notification.created_at).floor/60 < 60 %>
                   <%=(Time.zone.now-notification.created_at).floor/60%>分前
                 <% elsif (Time.zone.now-notification.created_at).floor/60 >= 60%>
@@ -367,38 +370,91 @@
         }
     })
 
-    var now1;
-    var now2;
-    var time1;
-    var time2;
+    var sec = 0;
+    var min = 0;
+    var hour = 0;
     var date = new Date();
     date.setDate(1);
     var today = new Date();
     var point = date.getDay()+today.getDate()-1;
     var row = Math.floor(point/7) + 1;
     var column = (point % 7);
-    var totaltime = 0;
-    var i;
+    var timer = new Array;
     $(".train-month-2").text(`${today.getMonth()+1}月`);
     $(".start").on("click",function(){
+      var day = new Date();
         if ($(this).text() == "トレーニングを開始する"){
-            if (i && i != today.getDate()){
-                totaltime = 0;
+            if (!localStorage.getItem(`${today.getMonth()+1}月${today.getDate()}日`)){
+              sec = 0;
+              min = 0;
+              hour = 0;
+              $("#clock").html("00:00:00");
+            }else{
+              storagetime = `${today.getMonth()+1}月${today.getDate()}日`;
+              var obj = localStorage.getItem(storagetime);
+              object = JSON.parse(obj);
+              sec = object.sec;
+              min = object.min;
+              hour = object.hour;
             }
-            now1 = new Date();
-            time1 = now1.getHours()*60+now1.getMinutes();
+            timer.push(setInterval(countup, 1000));
             $(this).text("トレーニングをやめる");
             $(this).toggleClass("dark");
         }
         else{
             $(this).text("トレーニングを開始する");
             $(this).toggleClass("dark");
-            now2 = new Date();
             var now = new Date();
-            i = now.getDate();
-            time2 = now2.getHours()*60+now2.getMinutes();
-            totaltime = totaltime + (time2-time1);
-            if(totaltime >= 90){
+            console.log(timer);
+            for (var i = 1; i < 99999; i++){
+                if(clearInterval(i)){
+                  break;
+                }
+            }
+            stopwatch(hour*60+min);
+            storagetime = `${now.getMonth()+1}月${now.getDate()}日`;
+            var obj1 = localStorage.getItem(storagetime);
+            object = JSON.parse(obj1);
+            object.which = "start";
+            var obj2 = JSON.stringify(object);
+            localStorage.setItem(storagetime,obj2);
+        }
+    })
+    function countup(){
+      sec += 1;
+
+      if (sec > 59) {
+        sec = 0;
+        min += 1;
+      }
+
+      if (min > 59) {
+        min = 0;
+        hour += 1;
+      }
+
+
+      sec_number = ('0' + sec).slice(-2);
+      min_number = ('0' + min).slice(-2);
+      hour_number = ('0' + hour).slice(-2);
+
+      $('#clock').html(hour_number + ':' +  min_number + ':' + sec_number);
+      var obj = {
+              sec : sec,
+              min : min,
+              hour : hour,
+              which : "stop"
+      };
+      var obj = JSON.stringify(obj);
+      storagetime = `${today.getMonth()+1}月${today.getDate()}日`;
+      localStorage.setItem(storagetime,obj);
+      o = localStorage.getItem(storagetime);
+      console.log(JSON.parse(o));
+      console.log(sec);
+    }
+
+    function stopwatch(totaltime){
+      if(totaltime >= 90){
                 $(`.train-row .train-row-parant-child:nth-child(${row+1}) .train-row-child-child:nth-child(${column})`).addClass("high");
             }else if(totaltime >= 60){
                 $(`.train-row .train-row-parant-child:nth-child(${row+1}) .train-row-child-child:nth-child(${column})`).addClass("medium-high");
@@ -407,7 +463,43 @@
             }else if(totaltime >= 10){
                 $(`.train-row .train-row-parant-child:nth-child(${row+1}) .train-row-child-child:nth-child(${column})`).addClass("low");
             }
-        }
+    }
+    for(var s=1;s<=31;s++){
+      var jsonObj = localStorage.getItem(`${today.getMonth()+1}月${s}日`);
+      if(jsonObj){
+        var jsObj = JSON.parse(jsonObj);
+        stopwatch(jsObj.hour*60+jsObj.min);
+      }
+      if(s == today.getDate() && jsonObj){
+        sec_number = ('0' + jsObj.sec).slice(-2);
+        min_number = ('0' + jsObj.min).slice(-2);
+        hour_number = ('0' + jsObj.hour).slice(-2);
+        $('#clock').html(hour_number + ':' +  min_number + ':' + sec_number);
+        break;
+      }else{
+        $("#clock").html("00:00:00")
+      }
+    }
+
+    if(localStorage.getItem(`${today.getMonth()+1}月${today.getDate()}日`)){
+      var todayObj = localStorage.getItem(`${today.getMonth()+1}月${today.getDate()}日`);
+      var object = JSON.parse(todayObj);
+      console.log(object);
+      if (object.which == "start"){
+        $(".start").text("トレーニングを開始する");
+        $(".start").removeClass("dark");
+      }else if(object.which == "stop"){
+        $(".start").text("トレーニングをやめる");
+        $(".start").addClass("dark");
+      }
+    }
+
+    $(".fa-square-plus").on("click",function(){
+      $(".post-new").fadeIn();
+    })
+
+    $(".fa-times").on("click",function(){
+      $(".post-new").fadeOut();
     })
     });
 </script>

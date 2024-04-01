@@ -1,18 +1,37 @@
 <div class="main main-followerlist">
-<div class="container">
-  <% if @user %>
+  <div class="foller-name">
+    <% @followers.each_with_index do |follower,i|%>
+      <% if i == 0 %>
+        <% user=User.find_by(id:follower.follower)%>
+        <%=image_tag "/user_images/#{user.image_name}", size: "70x70", style: "object-fit:cover; border-radius: 70px;" %>
+        <%=link_to(user.name,"/users/#{user.id}")%>
+      <% end %>
+    <% end %>
+  </div>
+  <% if @users %>
     <% @users.each do |user| %>
       <article class="favs-index-item">
-        <div class="postname">
+        <div class="fav-name">
           <%= link_to(user.name,"/users/#{user.id}")%>
-          <%=image_tag "/user_images/#{user.image_name}", size: "120x120", style: "object-fit:cover;" %>
+          <%=image_tag "/user_images/#{user.image_name}", style: "object-fit:cover;" %>
+        </div>
+        <div class="fav-profile">
+          <%=user.profile%>
+        </div>
+        <div class="fav-follow">
+          <% if @current_user.id != user.id%>
+            <% if Fav.find_by(follow:@current_user.id,follower:user.id) %>
+              <%=link_to("フォロー解除","/favs/#{user.id}/unfollow",class: "follow",data:{turbo_method: :post})%>
+            <% else %>
+              <%=link_to("フォロー","/favs/#{user.id}/follow",class: "follow",data:{turbo_method: :post})%>
+            <% end %>
+          <% end %>
         </div>
       </article>
     <% end %>
   <% else %>
     <p>フォローされているユーザーはいません。</p>
   <% end %>
-</div>
 </div>
 
 <script type="text/javascript">

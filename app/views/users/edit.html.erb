@@ -9,9 +9,7 @@
       <input name="image" type="file">
     </div>
     <div class="edit-section2">
-      <p>ニックネーム</p>
-      <input name="name" value="<%=@user.name%>">
-      <label for="profile">プロフィール</label>
+      <input class="edit-name" name="name" placeholder="ニックネーム" value="<%=@user.name%>">
       <textarea id="profile" name="profile" placeholder="プロフィールに自己紹介を追加する"><%=@user.profile%></textarea>
       <input type="submit" value="送信">
     </div>

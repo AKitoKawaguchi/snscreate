@@ -1,9 +1,68 @@
+.foller-name{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
 .favs-index-item {
-    padding: 0px 20px 0 0;
+    padding: 10px 20px 0;
     background-color: white;
     overflow: hidden;
     box-shadow: 0 2px 6px #c1ced7;
-    display: grid;
-    grid-template-rows: 2fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    display: flex;
+    height: 140px;
+}
+.fav-profile{
+    margin: 20px;
+    width: 65%;
+    font-size: 20px;
+    text-align: left;
+}
+.fav-name{
+    font-size: 18px;
+    width: 15%;
+}
+
+.fav-name img{
+    width: calc(55px + 100vw/25);
+    height: calc(55px + 100vw/25);
+    border-radius: calc(55px + 100vw/25);
+}
+.fav-name a{
+    display: block;
+}
+
+.fav-follow{
+    margin-left: auto;
+}
+@media (max-width:980px){
+    .fav-profile{
+        width: 50%;
+        font-size: 18px;
+    }
+}
+@media(max-width:430px){
+    .favs-index-item {
+        display: block;
+        position: relative;
+        height: 200px;
+    }
+    .fav-name{
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+    }
+    .fav-profile{
+        font-size: 16px;
+    }
+    .fav-follow{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 14px;
+    }
 }

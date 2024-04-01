@@ -1,8 +1,10 @@
 <div class="main users-train_edit">
   <div class="container">
-    <%=@recode.created_at.strftime("%Y/%m/%d")%>
+    <div class="train-edit-date">
+      <%=@recode.created_at.strftime("%Y/%m/%d")%>
+    </div>
     <%=form_with url: "/users/#{@recode.id}/recode_edit" do |form|%>
-      <%=form.text_area :recontent , class: "pp", value: @content %>
+      <%=form.text_area :recontent , class: "train-edit-text", value: @content %>
       <%=form.button "変更"%>
     <% end %>
   </div>

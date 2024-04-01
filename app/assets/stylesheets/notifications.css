@@ -14,9 +14,11 @@
 .notification-index{
     grid-row: 1/2;
     grid-column: 2/6;
-    text-align: left;
     line-height: 80px;
-    font-size: 24px;
+    margin: 10px;
+    width: 65%;
+    font-size: 20px;
+    text-align: left;
 }
 
 .notification-item{
@@ -29,5 +31,66 @@
     display: grid;
     grid-template-rows: 2fr 1fr;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    align-items: center;
+    align-items: start;
+}
+.notification-name a{
+    display: block;
+}
+.notification-name img{
+    width: calc(55px + 100vw/25);
+    height: calc(55px + 100vw/25);
+    border-radius: calc(55px + 100vw/25);
+}
+
+.notification2 img{
+    width: calc(35px + 100vw/25);
+    height: calc(35px + 100vw/25);
+    border-radius: calc(35px + 100vw/25);
+}
+
+.notification-index2{
+    grid-row: 1/2;
+    grid-column: 2/6;
+    line-height: 40px;
+    margin: 10px;
+    width: 65%;
+    text-align: left;
+    font-size: 14px;
+}
+
+.notification-option{
+    grid-row: 2/3;
+    grid-column: 2/6;
+    position: absolute;
+    bottom: 5px;
+    display: flex;
+    align-items: end;
+    gap: 100px;
+}
+@media(max-width:430px){
+    .notification-index-item{
+        display: block;
+    }
+    .notification-item{
+        height: 160px;
+        display: block;
+    }
+    .notification-name{
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+    }
+    .notification-option{
+        position: absolute;
+        bottom: 5px;
+        right: 60px;
+        gap: 70px;
+    }
+    .notification2{
+        margin-top: 5px;
+        margin-left: 5px;
+    }
 }
