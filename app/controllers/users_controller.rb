@@ -53,8 +53,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def start
+    if session[:user_id]
+      redirect_to("/users/#{@current_user.id}")
+    else
+      redirect_to("/users/login_form")
+    end
+  end
+
   def login_form
-    session[:user_id] = nil
   end
 
   def login

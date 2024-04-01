@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get "main/:name/hashtag" => "main#hashtag"
   post "main/:id/reply" => "main#reply"
   get "/" => "home#top"
+  get "start" => "users#start"
   get "signup" => "users#new"
   get "login" => "users#login_form"
   post "login" => "users#login"

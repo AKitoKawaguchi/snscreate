@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>筋SNS</title>
+    <title>MoscleSocial</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -15,11 +15,7 @@
   </head>
   <header>
   <div class="header-logo">
-    <%if session[:user_id]%>
-      <%= link_to("SaunaApp","/users/#{@current_user.id}")%>
-    <% else %>
-    <%=link_to("SaunaApp","/login")%>
-    <% end %>
+    <%=link_to("MuscleSocial","/")%>
   </div>
   <% if @current_user %>
   <ul class="header-menus">
@@ -67,6 +63,7 @@
   <% end %>
   </header>
   <body>
+  <% if @current_user %>
   <div class="header-bar1-content none">
     <div class="header-content">
       <%=link_to("投稿一覧","/main/index")%>
@@ -78,6 +75,7 @@
       <%=link_to("ログアウト","/logout",data:{turbo_method: :post})%>
     </div>
   </div>
+  <% end %>
   <div class="header-bar2-content none">
     <div class="header-content">
       <%=link_to("新規登録","/signup")%>
