@@ -279,7 +279,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   kaminari
-  pg (= 1.5.6)
+  pg
   puma (>= 5.0)
   rails (~> 7.1.2)
   selenium-webdriver

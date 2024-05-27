@@ -6,8 +6,6 @@ gem "jquery-rails"
 
 gem "kaminari" 
 
-gem "pg","1.5.6"
-
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.2"
 
@@ -70,4 +68,8 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+end
+
+group :production do
+  gem 'pg'
 end
