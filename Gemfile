@@ -6,7 +6,7 @@ gem "jquery-rails"
 
 gem "kaminari" 
 
-gem "pg"
+gem "pg","1.5.6"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.2"
