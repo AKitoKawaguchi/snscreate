@@ -30,10 +30,14 @@
     </li>
     <li>
     <% if @notifications.where(checked:false).size == 0%>
-      <span class="fa-solid fa-bell"></span>
+      <%=link_to("/notifications/index") do %>
+        <span class="fa-solid fa-bell"></span>
+      <% end %>
     <% else %>
-      <span class="fa-solid fa-bell"></span>
-      <i class="fa-solid fa-circle"></i>
+      <%=link_to("/notifications/index") do %>
+        <span class="fa-solid fa-bell"></span>
+        <i class="fa-solid fa-circle"></i>
+      <% end %>
     <% end %>
     </li>
   </ul>
@@ -42,10 +46,14 @@
   </div>
   <div class="bell">
     <% if @notifications.where(checked:false).size == 0%>
-      <span class="fa-solid fa-bell"></span>
+      <%=link_to("/notifications/index") do %>
+        <span class="fa-solid fa-bell"></span>
+      <% end %>
     <% else %>
-      <span class="fa-solid fa-bell"></span>
-      <i class="fa-solid fa-circle"></i>
+      <%=link_to("/notifications/index") do %>
+        <span class="fa-solid fa-bell"></span>
+        <i class="fa-solid fa-circle"></i>
+      <% end %>
     <% end %>
   </div>
   <% else %>

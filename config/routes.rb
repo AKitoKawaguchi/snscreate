@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "main/:id" => "main#show"
   post "main/:id/destroy" => "main#destroy"
   get "main/:name/hashtag" => "main#hashtag"
+  get "main/:post_id/comment" => "main#comment"
   post "main/:id/reply" => "main#reply"
   get "/" => "home#top"
   get "start" => "users#start"
@@ -30,6 +31,8 @@ Rails.application.routes.draw do
   post "searches/user_search" => "searches#user_search"
   get "searches/:post/post" => "searches#postsearch"
   post "searches/post_search" => "searches#post_search"
+  get "notifications/index" => "notifications#index"
+  get "notifications/nofound" => "notifications#nofound"
   get "notifications/:id" => "notifications#show"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

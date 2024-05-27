@@ -1,3 +1,38 @@
+.tuuti{
+    position: fixed;
+    top:80px;
+    right: 0;
+    width: 100%;
+    height: 90%;
+    z-index: 100;
+    overflow-y: auto;
+}
+.notice {
+    position: relative;
+    padding: 0 50px;
+    font-size: 20px;
+    text-align: center;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0 2px 6px #c1ced7;
+    height: 100px;
+ }
+ .notice-content{
+    margin: 35px 0 0 20px;
+    text-align: left;
+ }
+ .notice-time{
+    color: black;
+    font-size: 14px;
+    display: inline;
+ }
+
+ .notice img{
+    margin: 20px 20px 0 20px;
+    float: left;
+ }
+ 
+
 .notification-index-item{
     position: relative;
     padding: 0px 20px 0 0;
@@ -67,6 +102,13 @@
     align-items: end;
     gap: 100px;
 }
+
+.check{
+    background-color: rgb(252, 242, 228) !important;
+}
+.notice a{
+    display: inline;
+}
 @media(max-width:430px){
     .notification-index-item{
         display: block;
@@ -92,5 +134,9 @@
     .notification2{
         margin-top: 5px;
         margin-left: 5px;
+    }
+    .notice{
+        font-size: 14px;
+        padding: 0 20px;
     }
 }

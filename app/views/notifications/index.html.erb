@@ -1,0 +1,78 @@
+<div class="main notifications-index">
+    <div class="tuuti">
+      <% if @notifications %>
+        <% @notifications.each do |notification| %>
+          <div class="notice" data-notification-id ="<%=notification.to_json%>">
+                <% visitor = User.find_by(id:notification.visitor_id) %>
+                <% if notification.action == "like"%>
+                <% post = Like.find_by(id:notification.like_id)%>
+                <% elsif notification.action == "comment"%>
+                <% comment = Post.find_by(id:notification.comment_id)%>
+                <% end %>
+                <%=image_tag "/user_images/#{visitor.image_name}", size: "60x60", style: "object-fit:cover; border-radius:60px;"%>
+                <div class="notice-content">
+                <% case notification.action %>
+                <% when "follow" then %>
+                    <%=link_to visitor.name,"/users/#{visitor.id}", style: "color: mediumaquamarine; font-weight: bold;"%>があなたをフォローしました
+                    <div class="notice-time">
+                      <% if (Time.zone.now-notification.created_at).floor/60 < 60 %>
+                      <%=(Time.zone.now-notification.created_at).floor/60%>分前
+                      <% elsif (Time.zone.now-notification.created_at).floor/60 < 3600%>
+                      <%=(Time.zone.now-notification.created_at).floor/3600%>時間前
+                      <% else %>
+                      <%=(Time.zone.now-notification.created_at).floor/86400%>日前
+                      <% end %>
+                    </div>
+                <% when "like" then%>
+                    <%=link_to visitor.name,"/users/#{visitor.id}",style: "color: mediumaquamarine; font-weight: bold;"%>が<%=link_to "あなたの投稿","/main/#{post.post_id}",style: "color: mediumaquamarine; font-weight: bold;"%>にいいねしました
+                    <div class="notice-time">
+                      <% if (Time.zone.now-notification.created_at).floor/60 < 60 %>
+                      <%=(Time.zone.now-notification.created_at).floor/60%>分前
+                      <% elsif (Time.zone.now-notification.created_at).floor/60 < 3600%>
+                      <%=(Time.zone.now-notification.created_at).floor/3600%>時間前
+                      <% else %>
+                      <%=(Time.zone.now-notification.created_at).floor/86400%>日前
+                      <% end %>
+                    </div>
+                <% when "comment" then %>
+                    <%=link_to visitor.name,"/users/#{visitor.id}",style: "color: mediumaquamarine; font-weight: bold;"%>が<%=link_to "あなたの投稿","/main/#{comment.tocomment}",style: "color: mediumaquamarine; font-weight: bold;"%>にコメントしました
+                    <div class="notice-time">
+                      <% if (Time.zone.now-notification.created_at).floor/60 < 60 %>
+                      <%=(Time.zone.now-notification.created_at).floor/60%>分前
+                      <% elsif (Time.zone.now-notification.created_at).floor/60 < 3600%>
+                      <%=(Time.zone.now-notification.created_at).floor/3600%>時間前
+                      <% else %>
+                      <%=(Time.zone.now-notification.created_at).floor/86400%>日前
+                      <% end %>
+                    </div>
+                <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p>通知はありません</p>
+      <% end %>
+    </div>
+
+<script type="text/javascript">
+  $(function(){
+   $(".notice").each(function(){
+      notify = $(this).data("notification-id");
+      console.log(notify);
+      if(notify.checked === false){
+        $(this).addClass("check")
+      }
+   })
+
+   $(window).on('beforeunload',function(){
+	$(".notice").removeClass("check");
+   });
+
+    $(".notice").on("click",function(e){
+        notification = $(this).data("notification-id");
+        if (!$(e.target).closest("a").length){
+            window.location.href = `/notifications/${notification.id}`
+        }
+    })
+  })
+</script>

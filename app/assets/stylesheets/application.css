@@ -78,15 +78,7 @@
    width: 100%;
    z-index: 1000;
  }
- .notice {
-   position: relative;
-   padding: 30px 20px;
-   text-align: center;
-   background-color: white;
-   overflow: hidden;
-   box-shadow: 0 2px 6px #c1ced7;
-}
-
+ 
 .header-content{
    position: relative;
    padding: 10px 20px;

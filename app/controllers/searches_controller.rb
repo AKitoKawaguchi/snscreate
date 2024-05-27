@@ -5,8 +5,13 @@ class SearchesController < ApplicationController
 
     def usersearch
         @perfectusers = User.where(name:params[:name])
+        @perfectusers = @perfectusers - [@current_user]
         @users = User.where("name LIKE?","%#{params[:name]}%")
         @particalusers = @users - @perfectusers
+        @particalusers = @particalusers - [@current_user]
+        if (!(@perfectusers) || @perfectusers == []) && (!(@particalusers) || @particalusers == [])
+            @message = "該当するユーザーはいません。"
+        end
     end
 
     def post_search

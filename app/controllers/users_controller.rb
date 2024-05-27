@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   def mypage
     @user = User.find_by(id:params[:id])
     @likes = Like.where(user_id:params[:id])
-    @comments = Post.where(user_id:params[:id],like: nil)
+    @comments = Post.where(user_id:params[:id]).where.not(tocomment: nil)
     @follow = Fav.where(follow:params[:id])
     @follower = Fav.where(follower:params[:id])
   end

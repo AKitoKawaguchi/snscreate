@@ -6,8 +6,12 @@ class MainController < ApplicationController
 
   def show
     @post = Post.find_by(id:params[:id])
-    @user = User.find_by(id:@post.user_id)
-    @comments = Post.where(tocomment:@post.id)
+    if !(@post)
+      redirect_to("/notifications/nofound")
+    else
+      @user = User.find_by(id:@post.user_id)
+      @comments = Post.where(tocomment:@post.id)
+    end
   end
 
 
@@ -41,6 +45,10 @@ class MainController < ApplicationController
     @post.destroy
     @like.destroy_all
     redirect_to("/main/index")
+  end
+
+  def comment
+    @post = Post.find_by(id:params[:post_id])
   end
 
 

@@ -157,7 +157,7 @@
     <div class="overflow-reply none">
       <% @comments.each do |comment|%>
         <% unless comment.like %>
-        <div class="posts-mypage-post">
+        <div class="posts-mypage-reply" data-reply-id="<%=comment.to_json%>">
           <div class="post-mypage-content">
             <%=comment.content%>
           </div>
@@ -250,52 +250,6 @@
   </div>
 </div>
 
-<div class="tuuti none">
-      <% if @notifications %>
-        <% @notifications.each do |notification| %>
-          <div class="notice" data-notification-id ="<%=notification.to_json%>">
-            <% visitor = User.find_by(id:notification.visitor_id) %>
-            <% if notification.action == "like"%>
-              <% post = Like.find_by(id:notification.like_id)%>
-            <% elsif notification.action == "comment"%>
-              <% comment = Post.find_by(id:notification.comment_id)%>
-            <% end %>
-            <%=image_tag "/user_images/#{visitor.image_name}", size: "40x40", style: "object-fit:cover; border-radius:40px;"%>
-            <% case notification.action %>
-              <% when "follow" then %>
-                <%=link_to visitor.name,"/users/#{visitor.id}", style: "color: mediumaquamarine; font-weight: bold;"%>があなたをフォローしました
-                <% if (Time.zone.now-notification.created_at).floor/60 < 60 %>
-                  <%=(Time.zone.now-notification.created_at).floor/60%>分前
-                <% elsif (Time.zone.now-notification.created_at).floor/60 >= 60%>
-                  <%=(Time.zone.now-notification.created_at).floor/3600%>時間前
-                <% else %>
-                  <%=(Time.zone.now-notification.created_at).floor/86400%>日前
-                <% end %>
-              <% when "like" then%>
-                <%=link_to visitor.name,"/users/#{visitor.id}",style: "color: mediumaquamarine; font-weight: bold;"%>が<%=link_to "あなたの投稿","/main/#{post.post_id}",style: "color: mediumaquamarine; font-weight: bold;"%>にいいねしました
-                <% if (Time.zone.now-notification.created_at).floor/60 < 60 %>
-                  <%=(Time.zone.now-notification.created_at).floor/60%>分前
-                <% elsif (Time.zone.now-notification.created_at).floor/60 >= 60%>
-                  <%=(Time.zone.now-notification.created_at).floor/3600%>時間前
-                <% else %>
-                  <%=(Time.zone.now-notification.created_at).floor/86400%>日前
-                <% end %>
-              <% when "comment" then %>
-                <%=link_to visitor.name,"/users/#{visitor.id}",style: "color: mediumaquamarine; font-weight: bold;"%>が<%=link_to "あなたの投稿","/main/#{comment.tocomment}",style: "color: mediumaquamarine; font-weight: bold;"%>にコメントしました
-                <% if (Time.zone.now-notification.created_at).floor/60 < 60 %>
-                  <%=(Time.zone.now-notification.created_at).floor/60%>分前
-                <% elsif (Time.zone.now-notification.created_at).floor/60 >= 60%>
-                  <%=(Time.zone.now-notification.created_at).floor/3600%>時間前
-                <% else %>
-                  <%=(Time.zone.now-notification.created_at).floor/86400%>日前
-                <% end %>
-            <% end %>
-          </div>
-        <% end %>
-      <% else %>
-        <p>通知はありません</p>
-      <% end %>
-    </div>
 
 <script type="text/javascript">
     $(function() {
@@ -348,27 +302,20 @@
         }
     });
 
+    $(".posts-mypage-reply").on("click",function(e){
+        post = $(this).data("reply-id");
+        if (!$(e.target).closest("a").length){
+            window.location.href = `/main/${post.id}`
+        }
+    });
+
     $(".posts-mypage-like").on("click",function(e){
         post = $(this).data("like-id");
         if (!$(e.target).closest("a").length){
             window.location.href = `/main/${post.id}`
         }
     });
-    $(".fa-bell").on("click",function(){
-        $(".tuuti").toggleClass("none");
-        $(".notice").each(function(){
-            notice = $(this).data("notification-id");
-            if (notice.checked ===false){
-                $(this).addClass("check");
-            }
-        });
-    });
-    $(".notice").on("click",function(e){
-        notification = $(this).data("notification-id");
-        if (!$(e.target).closest("a").length){
-            window.location.href = `/notifications/${notification.id}`
-        }
-    })
+    
 
     var sec = 0;
     var min = 0;
@@ -377,8 +324,8 @@
     date.setDate(1);
     var today = new Date();
     var point = date.getDay()+today.getDate()-1;
-    var row = Math.floor(point/7) + 1;
-    var column = (point % 7);
+    var todayrow = Math.floor(point/7) + 1;
+    var todaycolumn = (point % 7);
     var timer = new Array;
     $(".train-month-2").text(`${today.getMonth()+1}月`);
     $(".start").on("click",function(){
@@ -411,7 +358,7 @@
                   break;
                 }
             }
-            stopwatch(hour*60+min);
+            stopwatch(hour*60+min,todayrow,todaycolumn);
             storagetime = `${now.getMonth()+1}月${now.getDate()}日`;
             var obj1 = localStorage.getItem(storagetime);
             object = JSON.parse(obj1);
@@ -452,8 +399,8 @@
       console.log(JSON.parse(o));
       console.log(sec);
     }
-
-    function stopwatch(totaltime){
+    
+    function stopwatch(totaltime,row,column){
       if(totaltime >= 90){
                 $(`.train-row .train-row-parant-child:nth-child(${row+1}) .train-row-child-child:nth-child(${column})`).addClass("high");
             }else if(totaltime >= 60){
@@ -466,9 +413,13 @@
     }
     for(var s=1;s<=31;s++){
       var jsonObj = localStorage.getItem(`${today.getMonth()+1}月${s}日`);
+      console.log(jsonObj);
+      pp = date.getDay()+s-1;
+      row = Math.floor(pp/7) + 1;
+      column = (pp % 7);
       if(jsonObj){
         var jsObj = JSON.parse(jsonObj);
-        stopwatch(jsObj.hour*60+jsObj.min);
+        stopwatch(jsObj.hour*60+jsObj.min,row,column);
       }
       if(s == today.getDate() && jsonObj){
         sec_number = ('0' + jsObj.sec).slice(-2);

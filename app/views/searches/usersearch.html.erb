@@ -1,4 +1,7 @@
 <div class="main main-usersearch">
+  <% if @message %>
+    <%= @message %>
+  <% end %>
   <% if @perfectusers %>
   <% @perfectusers.each do |user| %>
     <div class="search-user">
