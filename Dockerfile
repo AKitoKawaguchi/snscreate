@@ -17,6 +17,9 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
+COPY .bin/render-build.sh /usr/bin/
+RUN chmod +x /usr/bin/render-build.sh
+
 # Install packages needed to build gems
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libvips pkg-config
