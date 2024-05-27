@@ -22,7 +22,6 @@ test:
 
 production:
   <<: *default
-  database: dpg-cpaeqnkf7o1s73aft97g-a
   adapter: postgresql
   encoding: unicode
   pool: 5
