@@ -2,13 +2,13 @@ databases:
   - name: musclesocial_PostgreSQL
     databaseName: dbname_e2vo
     user: aineee
-    region: Oregon
+    region: oregon
 
 services:
   - type: web
     name: snscreate
     env: ruby
-    region: singapore
+    region: oregon
     plan: starter
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
