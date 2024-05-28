@@ -45,6 +45,7 @@ FROM base
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libsqlite3-0 libvips && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
