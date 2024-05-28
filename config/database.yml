@@ -79,6 +79,6 @@ test:
 #
 production:
   <<: *default
-  database: sauna_app_production
-  username: sauna_app
+  database: dbname_e2vo
+  username: aineee
   password: <%= ENV["SAUNA_APP_DATABASE_PASSWORD"] %>
