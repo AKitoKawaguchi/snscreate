@@ -1,8 +1,8 @@
 databases:
   - name: musclesocial_PostgreSQL
     databaseName: dbname_e2vo
-    user: snscreate
-    region: singapore
+    user: aineee
+    region: Oregon
 
 services:
   - type: web
