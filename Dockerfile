@@ -42,8 +42,10 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 # Install packages needed for deployment
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs vim \
- rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN apt-get update -qq && 
+RUN apt-get install -y build-essential git libvips pkg-config 
+RUN rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
