@@ -27,3 +27,4 @@ production:
   database: dbname_e2vo
   username: aineee
   password: <%= ENV['DB_PASSWORD'] %>
+   url: <%= ENV['DATABASE_URL'] %>
