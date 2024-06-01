@@ -3,7 +3,7 @@
     <% @follows.each_with_index do |follow,i|%>
       <% if i == 0 %>
         <% user=User.find_by(id:follow.follow)%>
-        <%=image_tag "/user_images/#{user.image_name}", size: "70x70", style: "object-fit:cover; border-radius: 70px;" %>
+        <%=image_tag "/user_images/#{user.image_name}", size: "70x70", style: "object-fit:cover; border-radius: 70px; margin-right:10px;" %>
         <%=link_to(user.name,"/users/#{user.id}")%>
       <% end %>
     <% end %>

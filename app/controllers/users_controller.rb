@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :ensure_user_id,{only:[:mypage]}
-  before_action :ensure_correct_user,{only:[:edit,:update,:train,:train_form]}
+  before_action :ensure_user_id,{only:[:mypage,:delete]}
+  before_action :delete_user_id,{only:[:mypage]}
+  before_action :ensure_correct_user,{only:[:edit,:update,:train,:train_form,:delete]}
   before_action :ensure_train_user,{only:[:train_edit,:train_destroy,:recode_edit]}
 
   def new
@@ -138,10 +139,29 @@ class UsersController < ApplicationController
     @recode.destroy
     redirect_to("/users/#{@recode.user_id}/train")
   end
+
+  def delete
+  end
+
+  def delete_decision
+    @user = User.find_by(id:params[:user_id])
+    Fav.destroy_by(follow:@user.id)
+    Fav.destroy_by(follower:@user.id)
+    @user.destroy
+    session[:user_id] = nil
+    redirect_to("/")
+  end
+
   def ensure_user_id
     unless session[:user_id]
       flash[:notice] = "権限がありません"
       redirect_to("/login")
+    end
+  end
+
+  def delete_user_id
+    unless User.find_by(id:params[:id])
+      redirect_to("/searches/#{params[:id]}/user")
     end
   end
 
