@@ -78,9 +78,10 @@
     <div class="delete-window" style="display:none">
       <div class="delete-window-content">
         <p>本当に退会しますがよろしいですか？</p>
+        <h5>この操作は取り消すことができません。</h5>
         <div class="delete-window-content-button">
-          <%=button_to "キャンセル" ,class: "delete1"%>
-          <%=button_to("退会する","/users/#{@current_user.id}/delete",data:{turbo_method: :post} ,class: "delete2")%>
+          <%=button_to("退会する","/users/#{@current_user.id}/delete",data:{turbo_method: :post} ,class: "delete-button")%>
+          <div class="canc-button">キャンセル</div>
         </div>
       </div>
     </div>
@@ -122,6 +123,9 @@
     })
     $(".delete").on("click",function(){
       $(".delete-window").css("display","block");
+    })
+    $(".canc-button").on("click",function(){
+      $(".delete-window").css("display","none");
     })
   })
 </script>

@@ -123,36 +123,55 @@
 
 .delete-window-content{
    position: fixed;
+   border-radius: 10px;
    top:30%;
    right: 35%;
    width: 30%;
-   height: 20%;
    box-sizing: border-box;
    background-color: #fff;
    padding: 15px 30px 30px 30px;
    border: 2px solid rgb(26, 201, 250);
 }
 
-.delete-window-content-button{
-   display: flex;
-   gap:20px;
+.delete-window-content h5{
+   color: #cecece;
+   margin: 0;
 }
 
 .delete-window-content button{
    padding: 10px;
-   display: inline;
-   border-radius: 50%;
+   width: 100%;
+   border-radius: 20px;
+   margin-top: 20px;
 }
 
-.delete1{
-   background-color: #fff;
-   border: 1px solid black;
-}
-
-.delete2{
+.delete-button{
    background-color: rgb(26, 201, 250);
    border: 1px solid rgb(26, 201, 250);
    color: #fff;
+   font-size: 16px;
+   font-weight: bold;
+}
+
+.delete-button:hover{
+   background-color: rgb(26, 186, 231);
+   cursor: pointer;
+}
+
+.canc-button{
+   background-color: #fff;
+   border: 1px solid #cecece;
+   color: black;
+   padding: 10px;
+   border-radius: 20px;
+   margin-top: 20px;
+   text-align: center;
+   font-size: 16px;
+}
+
+.canc-button:hover{
+   background-color: #cecece;
+   cursor: pointer;
 }
 
 @media(max-width:980px){
