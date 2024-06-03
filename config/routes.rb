@@ -15,7 +15,6 @@ Rails.application.routes.draw do
   post "users/:user_id/delete" => "users#delete_decision"
   post "users/create" => "users#create"
   get "users/:id" => "users#mypage"
-  get "users/:id/edit" => "users#edit"
   post "users/:id/update" => "users#update"
   get "users/:id/train" => "users#train"
   post "users/:id/train_form" => "users#train_form"

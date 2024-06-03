@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :ensure_user_id,{only:[:mypage,:delete]}
   before_action :delete_user_id,{only:[:mypage]}
-  before_action :ensure_correct_user,{only:[:edit,:update,:train,:train_form,:delete]}
+  before_action :ensure_correct_user,{only:[:update,:train,:train_form,:delete]}
   before_action :ensure_train_user,{only:[:train_edit,:train_destroy,:recode_edit]}
 
   def new
@@ -30,15 +30,13 @@ class UsersController < ApplicationController
     @follower = Fav.where(follower:params[:id])
   end
 
-
-  def edit
-    @user = User.find_by(id:params[:id])
-  end
-
   def update
     @user = User.find_by(id: params[:id])
     @user.name = params[:name]
     @user.profile = params[:profile]
+    if @user.profile == ""
+      @user.profile = nil
+    end
     
     if params[:image]
       @user.image_name = "#{@user.id}.jpg"
@@ -49,8 +47,6 @@ class UsersController < ApplicationController
     if @user.save
       flash[:notice] = "ユーザー情報を編集しました"
       redirect_to("/users/#{@user.id}")
-    else
-      render("users/edit")
     end
   end
 

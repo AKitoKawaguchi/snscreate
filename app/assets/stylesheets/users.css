@@ -49,14 +49,137 @@
     grid-template-columns: 5fr 2fr 2fr 3fr;
 }
 
-.mypage-edit{
+
+.main-edit{
+    position: fixed;
+    top: 0;
+    right: 0;
     width: 100%;
-    height: 80vh;
-    display: grid;
-    box-sizing: border-box;
-    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    margin: auto;
+    background-color: rgb(0,0,0,0.4);
+    z-index: 100;
 }
 
+.edit-content{
+    position: fixed;
+    padding: 0 2rem;
+    top: 10%;
+    right: 30%;
+    width: 40%;
+    height: 80%;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow-y: scroll;
+}
+
+.edit-content-top{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.image-label{
+    position: relative;
+    background-color: #333;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fa-camera{
+    position: absolute;
+    color: #fff;
+}
+
+.image-file{
+    display: none;
+}
+
+.edit-profile-name{
+    border: 1px solid #333;
+    border-radius: 10px;
+    margin: 20px 0 5px 0;
+    padding-bottom: 20px;
+    height: 80px;
+}
+
+.edit-profile-name p{
+    margin-left: 0.5rem;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.edit-name-form{
+    border: none;
+    background-color: #fff;
+    width: 95%;
+    font-size: 22px;
+    outline: none;
+    margin-top: 10px;
+}
+
+.name-caution{
+    color: red;
+    font-size: 12px;
+    text-align: left;
+    margin: 0.5rem;
+}
+.edit-profile-comment{
+    border: 1px solid #333;
+    border-radius: 10px;
+    margin: 20px 0;
+    padding-bottom: 20px;
+    height: 300px;
+}
+
+.edit-profile-comment p{
+    margin-left: 0.5rem;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.edit-profile-form{
+    border: none;
+    background-color: #fff !important;
+    width: 95%;
+    font-size: 22px;
+    outline: none;
+    resize: none;
+    margin-top: 10px;
+}
+
+.fa-xmark{
+    color: #333;
+    cursor: pointer;
+}
+
+.xmark{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.xmark:hover{
+    background-color: rgb(0,0,0,0.2);
+}
+
+.edit-save-button{
+    border: none;
+    background-color: rgb(0,0,0,0.2);
+    outline: none;
+    border-radius: 30px;
+    padding: 8px 12px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+}
 .mypage-wrap{
     flex-flow: row;
     align-items: center;
@@ -169,43 +292,13 @@
 }
 
 
-.edit-section1{
-    grid-row: 1/2;
-    grid-column: 1/2;
-}
-.edit-section2{
-    grid-row: 1/2;
-    grid-column: 2/3;
-    padding: 10px;
-    background-color: #999;
-}
-
 ::placeholder{
     color: #999;
 }
 #profile{
     background-color: #eee;
     border: none;
-    margin: 20px 0;
     height: 200px;
-}
-.edit-name{
-    background-color: #eee;
-    border: none;
-    margin: 20px auto;
-}
-input{
-    margin: 0 auto;
-    display: block;
-}
-
-textarea{
-    width:400px;
-    margin-top:10px;
-    margin-bottom:30px;
-    padding:20px;
-    font-size:18px;
-    border:1px solid #dee7ec;
 }
 
 label{
@@ -317,9 +410,12 @@ label{
     background-color: #077485;
 }
 .main-edit img{
-    width: 350px;
-    height: 350px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
+    border-radius: 50%;
+    object-fit: cover;
+    opacity: 0.4;
 }
 
 .train-item-trainning{
@@ -588,15 +684,6 @@ label{
         position: fixed;
         bottom: 20px;
         right: 30px;
-    }
-    .mypage-edit{
-        width: 100%;
-        height: 80vh;
-        box-sizing: border-box;
-        display: block;
-    }
-    .edit-section2{
-        margin-top: 50px;
     }
 
     .train-form{

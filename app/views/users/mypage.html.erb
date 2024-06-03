@@ -1,4 +1,35 @@
-<div class="main users-maypage">
+<div class="main users-mypage">
+<div class="main-edit" style="display: none;">
+  <div class="edit-content" style="display: none;">
+  <%= form_with url: "/users/#{@user.id}/update", multipart: true do |form| %>
+    <div class="edit-content-top">
+     <div class="xmark">
+      <span class="fa-solid fa-xmark"></span>
+     </div>
+     <p>プロフィールを編集</p>
+     <%=form.submit "保存",class:"edit-save-button"%>
+    </div>
+    <div class="edit-profile-img">
+      <div class="edit-img">
+        <label class="image-label">
+          <span class="fa-solid fa-camera fa-2x"></span>
+          <%=image_tag("/user_images/#{@user.image_name}")%>
+          <%=form.file_field :image,class:"image-file"%>
+        </label>
+      </div>
+    </div>
+    <div class="edit-profile-name">
+      <p>ニックネーム</p>
+      <%=form.text_field :name, value:"#{@user.name}", placeholder:"ニックネーム", class:"edit-name-form"%>
+    </div>
+    <p class="name-caution" style="visibility:hidden;">ニックネームを入力してください</p>
+    <div class="edit-profile-comment">
+      <p>プロフィール</p>
+      <%=form.text_area :profile, value:"#{@user.profile}", placeholder:"プロフィールを追加", class:"edit-profile-form"%>
+    </div>
+  <% end %>
+  </div>
+</div>
   <div class="mypage">
     <div class="mypage-section1">
       <div class="user-image">
@@ -20,9 +51,7 @@
         <p><%=link_to("フォロー","/favs/#{@user.id}/followlist")%><%=@follow.count%></p>
         <p><%=link_to("フォロワー","/favs/#{@user.id}/followerlist")%><%=@follower.count%></p>
         <% if @current_user.id == @user.id%>
-          <%=link_to "/users/#{@user.id}/edit" do%>
           <span class="fa-solid fa-gear fa-lg"></span>
-          <% end %>
         <% end %>
         </div>
       </div>
@@ -315,6 +344,58 @@
             window.location.href = `/main/${post.id}`
         }
     });
+
+    $(".fa-gear").on("click",function(){
+      $(".main-edit").css("display","block");
+      $(".edit-content").css("display","block");
+    });
+
+    $(".fa-xmark").on("click",function(){
+      $(".main-edit").css("display","none");
+      $(".edit-content").css("display","none");
+    });
+
+    $(".edit-name-form").focus(function(){
+      $(".edit-profile-name p").css({"color":"rgb(26,201,250)","font-size":"12px"})
+      $(".edit-profile-name").css("border","1px solid rgb(26,201,250)")
+      if($(this).val() === ""){
+        $(".edit-profile-name").css("border","1px solid red");
+      }
+    }).blur(function(){
+      $(".edit-profile-name p").css({"color":"","font-size":""});
+      $(".edit-profile-name").css("border","1px solid #333");
+      if($(this).val() === ""){
+        $(".edit-profile-name").css("border","1px solid red");
+      }
+    });
+
+    $(".edit-name-form").on("input",function(){
+      if($(this).val() === ""){
+        $(".edit-profile-name").css("border","1px solid red");
+        $(".edit-profile-name p").css("display","none");
+        $(".name-caution").css("visibility","visible");
+      }else{
+        $(".edit-profile-name").css("border","1px solid #333");
+        $(".edit-profile-name p").css("display","");
+        $(".name-caution").css("visibility","hidden");
+      }
+    })
+
+    $(".edit-profile-form").focus(function(){
+      $(".edit-profile-comment p").css({"color":"rgb(26,201,250)","font-size":"12px"})
+      $(".edit-profile-comment").css("border","1px solid rgb(26,201,250)")
+    }).blur(function(){
+      $(".edit-profile-comment p").css({"color":"","font-size":""})
+      $(".edit-profile-comment").css("border","1px solid #333")
+    });
+
+    $(".edit-profile-form").on("input",function(){
+      if($(this).val() === ""){
+        $(".edit-profile-comment p").css("display","none");
+      }else{
+        $(".edit-profile-comment p").css("display","");
+      }
+    })
     
 
     var sec = 0;
