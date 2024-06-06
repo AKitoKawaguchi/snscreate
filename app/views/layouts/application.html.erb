@@ -33,7 +33,7 @@
     </li>
     <li>
     <% if @notifications.where(checked:false).size == 0%>
-      <%=link_to("/notifications/index}") do %>
+      <%=link_to("/notifications/index") do %>
         <span class="fa-solid fa-bell"></span>
       <% end %>
     <% else %>

@@ -1,127 +1,225 @@
 <div class="main users-train">
-  <div class="container">
-    <div>
-    <div class="float">
-      <div class="train-item-trainning" style="width:90%;">
-       <span class="fa-solid fa-dumbbell fa-lg"></span>
+  <div class="recode-write" id="recode" style="display:none;">
+  <%= form_with url: "/users/#{@user.id}/train_form" do |form| %>
+    <div class="recode-write-content" style="display:none;">
+      <div class="recode-content-top">
+        <div class="xmark">
+          <span class="fa-solid fa-xmark"></span>
+        </div>
+        <p>トレーニングを記録</p>
+        <%=form.submit "保存",class:"edit-save-button"%>
       </div>
-      <div class="train-item-food" style="width:10%;">
-        <span class="fa-solid fa-bowl-food fa-lg"></span>
+      <div class="recode-content-day" id="recode-content-day">
       </div>
-      <div class="train-item-sleep" style="width:10%;">
-       <span class="fa-solid fa-moon fa-lg"></span>
+        <div class="recode-content-trainning">
+          <p>トレーニング</p>
+          <%=form.text_area :trainnig, placeholder:"トレーニング", class:"trainning-form"%>
+        </div>
+        <div class="recode-content-food">
+          <p>食事</p>
+          <%=form.text_area :food, placeholder:"食事", class:"food-form"%>
+        </div>
+        <div class="recode-content-sleep">
+          <p>睡眠</p>
+          <%=form.text_area :sleep, placeholder:"睡眠", class:"sleep-form"%>
+        </div>
+        <%=form.hidden_field :date, value: ""%>
+    </div>
+<% end %>
+  </div>
+  <div class="train-recode">
+    <div class="train-recode-title">
+      トレーニング記録
+    </div>
+    <div class="train-recode-week">
+      <div class="recode-day">Mon</div>
+      <div class="recode-day">Tue</div>
+      <div class="recode-day">Wed</div>
+      <div class="recode-day">Thu</div>
+      <div class="recode-day">Fri</div>
+      <div class="recode-day">Sat</div>
+      <div class="recode-day">Sun</div>
+    </div>
+    <div class="train-recode-row">
+      <div class="train-recode-month">
+        <div class="train-recode-month-2">
+        </div>
+        <div class="train-recode-month-3">
+          </div>
       </div>
-    </div>
-    <div class="train-recode">
-      <% if @trainning_recodes%>
-        <% @trainning_recodes.each do |recode| %>
-          <article class="train-item-trainning-recode">
-            <div class="date">
-              <%=recode.created_at.strftime("%Y/%m/%d")%>
-            </div>
-            <div class="recode-content">
-              <%=recode.trainnig%>
-            </div>
-            <div class="train-option">
-              <%=link_to("/users/#{recode.id}/train_destroy", data:{turbo_method: :post}) do%>
-                <span class="fa-solid fa-trash" style="color:white;"></spna>
-              <% end %>
-              <%=link_to("/users/#{recode.id}/train_edit") do %>
-                <span class="fa-solid fa-gear fa-lg" style="color:white;"></span>
-              <% end %>
-            </div>
-           </article>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="food-recode none">
-      <% if @food_recodes%>
-        <% @food_recodes.each do |recode| %>
-          <article class="train-item-food-recode">
-            <div class="date">
-              <%=recode.created_at.strftime("%Y/%m/%d")%>
-            </div>
-            <div class="recode-content">
-              <%=recode.food%>
-            </div>
-            <div class="train-option">
-              <%=link_to("/users/#{recode.id}/train_destroy",data:{turbo_method: :post}) do%>
-                <span class="fa-solid fa-trash" style="color:white;"></spna>
-              <% end %>
-              <%=link_to("/users/#{recode.id}/train_edit") do %>
-                <span class="fa-solid fa-gear fa-lg" style="color:white;"></span>
-              <% end %>
-            </div>
-           </article>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="sleep-recode none">
-      <% if @sleep_recodes%>
-        <% @sleep_recodes.each do |recode| %>
-          <article class="train-item-sleep-recode">
-            <div class="date">
-              <%=recode.created_at.strftime("%Y/%m/%d")%>
-            </div>
-            <div class="recode-content">
-              <%=recode.sleep%>
-            </div>
-            <div class="train-option">
-              <%=link_to("/users/#{recode.id}/train_destroy",data:{turbo_method: :post}) do%>
-                <span class="fa-solid fa-trash" style="color:white;"></spna>
-              <% end %>
-              <%=link_to("/users/#{recode.id}/train_edit") do %>
-                <span class="fa-solid fa-gear fa-lg" style="color:white;"></span>
-              <% end %>
-            </div>
-           </article>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="train-form">
-      <%=form_with url: "/users/#{@user.id}/train_form" do |form|%>
-        <%=form.select :type, [["トレーニング",1],["食事",2],["睡眠",3]], {},{class: "train-form-select"}%>
-        <%=form.button "記録する"%>
-        <%=form.text_area :content %>
+      <% 5.times do%>
+        <div class="train-recode-row-parant-child">
+          <% 7.times do %>
+            <div class="train-recode-row-child-child"></div>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>
 </div>
-<script>
-  $(function() {
-    $(".train-item-trainning").css("background-color","rgb(127, 113, 255)");
-    $(".train-item-trainning").on("click",function(){
-        $(this).css("background-color","rgb(127, 113, 255)");
-        $(this).css("width","90%");
-        $(".train-item-food").css("width","10%");
-        $(".train-item-sleep").css("width","10%");
-        $(".train-item-food").css("background-color","");
-        $(".train-item-sleep").css("background-color","");
-        $(".train-recode").removeClass("none");
-        $(".food-recode").addClass("none");
-        $(".sleep-recode").addClass("none");
+<script type="text/javascript">
+  $(function(){
+    function getSurfaceText(selector){
+    var elem = $(selector[0].outerHTML);
+    elem.children().empty();
+    return elem.text();
+    }
+    var today = new Date();
+    var nextmonth = new Date();
+    nextmonth.setMonth(nextmonth.getMonth() + 1);
+    nextmonth.setDate(0);
+    $(".train-recode-month-2").text(`${today.getMonth()+1}月`);
+    $(".train-recode-month-3").text(`${today.getFullYear()}`);
+
+
+    for(i=1;i<=nextmonth.getDate();i++){
+      var date = new Date();
+      date.setDate(1);
+      var point = date.getDay()+i-1;
+      var row = Math.floor(point/7) + 1;
+      var column = (point % 7);
+      if (column === 0){
+        column = 7;
+        row = row -1;
+      }
+      $(`.train-recode-row .train-recode-row-parant-child:nth-child(${row+1}) .train-recode-row-child-child:nth-child(${column})`).text(`${i}`);
+      <% @trainrecodes.each do |trainrecode|%>
+        if(i === <%=trainrecode.date %>){
+          <% if trainrecode.trainnig%>
+            $(`.train-recode-row .train-recode-row-parant-child:nth-child(${row+1}) .train-recode-row-child-child:nth-child(${column})`).append("<div class='train-trainning-exist'>トレーニング</div>");
+          <% end%>
+          <% if trainrecode.food%>
+            $(`.train-recode-row .train-recode-row-parant-child:nth-child(${row+1}) .train-recode-row-child-child:nth-child(${column})`).append("<div class='train-food-exist'>食事</div>");
+          <% end%>
+          <% if trainrecode.sleep%>
+            $(`.train-recode-row .train-recode-row-parant-child:nth-child(${row+1}) .train-recode-row-child-child:nth-child(${column})`).append("<div class='train-sleep-exist'>睡眠</div>");
+          <% end%>
+        }
+      <% end %>
+      if (column === 6){
+        $(`.train-recode-row .train-recode-row-parant-child:nth-child(${row+1}) .train-recode-row-child-child:nth-child(${column})`).css("color","blue");
+      }else if(column === 7){
+        $(`.train-recode-row .train-recode-row-parant-child:nth-child(${row+1}) .train-recode-row-child-child:nth-child(${column})`).css("color","red");
+      }
+      if (i === today.getDate()){
+        $(`.train-recode-row .train-recode-row-parant-child:nth-child(${row+1}) .train-recode-row-child-child:nth-child(${column})`).addClass("train-today");
+      }else{
+        $(`.train-recode-row .train-recode-row-parant-child:nth-child(${row+1}) .train-recode-row-child-child:nth-child(${column})`).css("background-color","");
+      }
+    }
+
+    $(".train-recode-row-child-child").on("click",function(){
+      $(".recode-write").css("display","block");
+      $(".recode-write-content").css("display","block");
+      var text = getSurfaceText($(this));
+      $(".recode-content-day").text(`${today.getMonth()+1}/${text}`);
     })
-    $(".train-item-food").on("click",function(){
-        $(this).css("background-color","rgb(244, 108, 108)");
-        $(this).css("width","90%");
-        $(".train-item-trainning").css("width","10%");
-        $(".train-item-sleep").css("width","10%");
-        $(".train-item-trainning").css("background-color","");
-        $(".train-item-sleep").css("background-color","");
-        $(".food-recode").removeClass("none");
-        $(".train-recode").addClass("none");
-        $(".sleep-recode").addClass("none");
+
+    $(".xmark").on("click",function(){
+      $(".recode-write").css("display","none");
+      $(".recode-write-content").css("display","none");
     })
-    $(".train-item-sleep").on("click",function(){
-        $(this).css("background-color","rgb(217, 101, 249)");
-        $(this).css("width","90%");
-        $(".train-item-trainning").css("width","10%");
-        $(".train-item-food").css("width","10%");
-        $(".train-item-trainning").css("background-color","");
-        $(".train-item-food").css("background-color","");
-        $(".sleep-recode").removeClass("none");
-        $(".food-recode").addClass("none");
-        $(".train-recode").addClass("none");
+
+    $(".trainning-form").focus(function(){
+      $(".recode-content-trainning p").css({"color":"rgb(26,201,250)","font-size":"12px"})
+      $(".recode-content-trainning").css("border","1px solid rgb(26,201,250)")
+      if($(this).val() === ""){
+        $(".recode-content-trainning p").css("display","none");
+      }else{
+        $(".recode-content-trainning p").css("display","block");
+      }
+    }).blur(function(){
+      $(".recode-content-trainning p").css({"color":"","font-size":""});
+      $(".recode-content-trainning").css("border","1px solid #333");
+      if($(this).val() === ""){
+        $(".recode-content-trainning p").css("display","none");
+      }else{
+        $(".recode-content-trainning p").css("display","block");
+      }
+    });
+
+    $(".food-form").focus(function(){
+      $(".recode-content-food p").css({"color":"rgb(26,201,250)","font-size":"12px"});
+      $(".recode-content-food").css("border","1px solid rgb(26,201,250)");
+      if($(this).val() === ""){
+        $(".recode-content-food p").css("display","none");
+      }else{
+        $(".recode-content-food p").css("display","block");
+      }
+    }).blur(function(){
+      $(".recode-content-food p").css({"color":"","font-size":""});
+      $(".recode-content-food").css("border","1px solid #333");
+      if($(this).val() === ""){
+        $(".recode-content-food p").css("display","none");
+      }else{
+        $(".recode-content-food p").css("display","block");
+      }
+    });
+
+    $(".sleep-form").focus(function(){;
+      $(".recode-content-sleep p").css({"color":"rgb(26,201,250)","font-size":"12px"});
+      $(".recode-content-sleep").css("border","1px solid rgb(26,201,250)");
+      if($(this).val() === ""){
+        $(".recode-content-sleep p").css("display","none");
+      }else{
+        $(".recode-content-sleep p").css("display","block");
+      }
+    }).blur(function(){
+      $(".recode-content-sleep p").css({"color":"","font-size":""});
+      $(".recode-content-sleep").css("border","1px solid #333");
+      if($(this).val() === ""){
+        $(".recode-content-sleep p").css("display","none");
+      }else{
+        $(".recode-content-sleep p").css("display","block");
+      }
+    });
+
+    $(".trainning-form").on("input",function(){
+      if($(this).val() === ""){
+        $(".recode-content-trainning p").css("display","none");
+      }else{
+        $(".recode-content-trainning p").css("display","block");
+      }
     })
+
+    $(".food-form").on("input",function(){
+      if($(this).val() === ""){
+        $(".recode-content-food p").css("display","none");
+      }else{
+        $(".recode-content-food p").css("display","block");
+      }
+    })
+
+    $(".sleep-form").on("input",function(){
+      if($(this).val() === ""){
+        $(".recode-content-sleep p").css("display","none");
+      }else{
+        $(".recode-content-sleep p").css("display","block");
+      }
+    })
+
+    $(".train-recode-row-child-child").on("click",function(){
+      var date = $(this).text();
+      $("#date").val(date);
+      $.ajax({
+        url: "/users/get",
+        dataType: 'json',
+        type: 'GET',
+        data:{
+            id: "<%=@current_user.id%>",
+            date: date
+        }
+      }).done(function(data){
+        if(data){
+          $("#trainnig").val(data.trainnig);
+          $("#food").val(data.food);
+          $("#sleep").val(data.sleep);
+        }else{
+          $("#trainnig").val("");
+          $("#food").val("");
+          $("#sleep").val("");
+        }
+      });
+    });
   })
 </script>

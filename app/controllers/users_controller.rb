@@ -4,16 +4,13 @@ class UsersController < ApplicationController
   before_action :ensure_correct_user,{only:[:update,:train,:train_form,:delete]}
   before_action :ensure_train_user,{only:[:train_edit,:train_destroy,:recode_edit]}
 
+
   def new
     @user = User.new
   end
 
   def create
-    @user = User.new(
-     name: params[:name],
-     email: params[:email], 
-     password: params[:password],
-     image_name: "default.png")
+    @user = User.new(user_create)
     if @user.save
       session[:user_id] = @user.id
       redirect_to("/users/#{@user.id}")
@@ -21,6 +18,7 @@ class UsersController < ApplicationController
       render("users/new",status: 303)
     end
   end
+
 
   def mypage
     @user = User.find_by(id:params[:id])
@@ -82,31 +80,40 @@ class UsersController < ApplicationController
   end
 
   def train
-    @trainning_recodes = Trainrecode.where(user_id:params[:id],food:nil,sleep:nil)
-    @food_recodes = Trainrecode.where(user_id:params[:id],trainnig:nil,sleep:nil)
-    @sleep_recodes = Trainrecode.where(user_id:params[:id],food:nil,trainnig:nil)
-    @user = User.find_by(id:params[:id])
+    @user = User.find_by(id:params[:id]) 
+    @trainrecodes= Trainrecode.where(user_id:params[:id])
   end
 
+  def get
+    @trainrecode= Trainrecode.find_by(user_id:params[:id], date:params[:date])
+    @user = User.find_by(id:params[:id]) 
+    respond_to do |format|
+      format.json {render json: @trainrecode}
+  end
+  end
+  
   def train_form
-    if params[:type].to_i == 1
-      @recode =Trainrecode.new(
+    if @recode = Trainrecode.find_by(date: params[:date].to_i)
+      @recode.update(
         user_id: params[:id],
-        trainnig: params[:content]
+        trainnig: params[:trainnig],
+        food: params[:food],
+        sleep: params[:sleep],
+        date: params[:date].to_i
       )
-    elsif params[:type].to_i == 2
+      redirect_to("/users/#{@recode.user_id}/train")
+    else
       @recode = Trainrecode.new(
         user_id: params[:id],
-        food: params[:content]
-      )
-    elsif params[:type].to_i == 3
-      @recode = Trainrecode.new(
-        user_id: params[:id],
-        sleep: params[:content]
-      )
+        trainnig: params[:trainnig],
+        food: params[:food],
+        sleep: params[:sleep],
+        date: params[:date].to_i
+      ) 
+      if @recode.save
+        redirect_to("/users/#{@recode.user_id}/train")
+      end
     end
-    @recode.save
-    redirect_to("/users/#{@recode.user_id}/train")
   end
 
   def train_edit
@@ -173,5 +180,10 @@ class UsersController < ApplicationController
       flash[:notice] = "権限がありません"
       redirect_to("/main/index")
     end
+  end
+  
+  private
+  def user_create
+    params.permit(:name,:email,:password).merge(image_name: "default.png")
   end
 end

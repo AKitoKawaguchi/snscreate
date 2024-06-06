@@ -1,6 +1,6 @@
 <div class="main notifications-index">
     <div class="tuuti">
-      <% if @notifications %>
+      <% if @notifications%>
         <% @notifications.each do |notification| %>
           <div class="notice" data-notification-id ="<%=notification.to_json%>">
                 <% visitor = User.find_by(id:notification.visitor_id) %>
@@ -46,14 +46,14 @@
                       <% end %>
                     </div>
                 <% end %>
+                </div>
             </div>
-          </div>
         <% end %>
       <% else %>
         <p>通知はありません</p>
       <% end %>
     </div>
-
+</div>
 <script type="text/javascript">
   $(function(){
    $(".notice").each(function(){

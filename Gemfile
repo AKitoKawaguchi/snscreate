@@ -6,6 +6,10 @@ gem "jquery-rails"
 
 gem "kaminari" 
 
+gem 'jquery-turbolinks'
+
+gem 'pry-rails'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.2"
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_25_124828) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_05_034258) do
   create_table "favs", force: :cascade do |t|
     t.integer "follow"
     t.integer "follower"
@@ -71,9 +71,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_124828) do
     t.text "sleep"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "date"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: false, force: :cascade do |t|
+    t.integer "id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"

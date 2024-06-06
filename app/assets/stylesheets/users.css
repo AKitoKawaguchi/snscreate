@@ -81,6 +81,14 @@
     align-items: center;
 }
 
+.recode-content-top{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .image-label{
     position: relative;
     background-color: #333;
@@ -255,7 +263,7 @@
     font-size: 0.6rem;
 }
 
-.train-row{
+.train-row,.train-recode-row{
     position: relative;
 }
 
@@ -421,152 +429,222 @@ label{
     opacity: 0.4;
 }
 
-.train-item-trainning{
-    width: 33.3%;
-    padding: 20px 0px;
-    margin: 0px 0px;
-    background-color: rgb(127, 113, 255,0.6);
-    overflow: hidden;
-    box-shadow: 0px 0px 2px #c1ced7;
-    text-align: center;
-    font-weight: bold;
-    font-size: 18px;
-}
 
 .fa-dumbbell{
     color: white;
-}
-
-.train-item-food{
-    width: 33.3%;
-    padding: 20px 0px;
-    margin: 0px 0px;
-    background-color: rgb(244, 108, 108,0.6);
-    overflow: hidden;
-    box-shadow: 0px 0px 2px #c1ced7;
-    text-align: center;
-    font-weight: bold;
-    font-size: 18px;
 }
 
 .fa-bowl-food{
     color: white;
 }
 
-.train-item-sleep{
-    width: 33.3%;
-    padding: 20px 0px;
-    margin: 0px 0px;
-    background-color: rgb(217, 101, 249,0.6);
-    overflow: hidden;
-    box-shadow: 0px 0px 2px #c1ced7;
-    text-align: center;
-    font-weight: bold;
-    font-size: 18px;
-}
-
 .fa-moon{
     color: white;
 }
 
-.train-item-trainning-recode{
-    position: relative;
-    padding: 10px 20px;
-    margin: 0 auto;
-    background-color: rgb(127, 113, 255);
-    overflow: hidden;
-    box-shadow: 0px 2px 6px #c1ced7;
-    text-align: left;
-    box-sizing: border-box;
-    width: 100%;
-    height: 150px;
-    color: white;
-}
 
-.train-item-food-recode{
-    position: relative;
-    padding: 10px 20px;
-    margin: 0 auto;
-    background-color: rgb(244, 108, 108);
-    overflow: hidden;
-    box-shadow: 0px 2px 6px #c1ced7;
-    text-align: left;
-    box-sizing: border-box;
-    width: 100%;
-    height: 150px;
-    color: white;
-}
-
-.train-item-sleep-recode{
-    position: relative;
-    padding: 10px 20px;
-    margin: 0 auto;
-    background-color: rgb(217, 101, 249);
-    overflow: hidden;
-    box-shadow: 0px 2px 6px #c1ced7;
-    text-align: left;
-    box-sizing: border-box;
-    width: 100%;
-    height: 150px;
-    color: white;
-}
-
-.train-recode,.food-recode,.sleep-recode{
-    height: 360px;
-    overflow-y: auto;
-}
-.train-option{
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-}
-  .train-form{
-    background-color: #077485;
-  }
-
-  .train-form-select{
-    float: left;
-    padding: 10px;
-    font-weight: bold;
-    background-color: #077485;
-    color: white;
-    border-radius: 20px;
-  }
-
-  .train-form button{
-    float: right;
-    padding: 10px;
-    font-weight: bold;
-    background-color: #077485;
-    color: white;
-    border-radius: 20px;
-    border-color: #35f2c6;
-  }
-  .train-form textarea{
-    width: 95%;
-    border: 3px solid #077485;
-    margin-top:  0;
-    margin-bottom: 10px;
-  }
-
-  .train-edit-date{
+.train-edit-date{
     text-align: left;
     font-size: 26px;
-  }
+}
 
-  .train-edit-text{
+.train-edit-text{
     width: 70%;
     height: 400px;
     margin: 40px auto;
     background-color: #eee;
     border: none;
     font-size: 20px;
-  }
+}
 
-  .dark{
+.dark{
     background-color: rgb(70, 180, 143) !important;
-  }
+}
 
+.train-recode{
+    width: 90%;
+    margin: 50px auto;
+    height: 85vh;
+    overflow-y: auto;
+}
+
+.train-recode-title{
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    color: #000;
+    margin-left: 275px;
+}
+
+.train-recode-week{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+}
+
+.recode-day{
+    color: #000;
+    margin-right: 35px;
+    text-align: center;
+    width: 65px;
+    font-size: 1rem;
+}
+
+.train-recode-row{
+    width: 20%;
+    height: 600px;
+}
+
+.train-recode-month{
+    position: absolute;
+    left: 125px;
+    top: -150px;
+    width: 60%;
+    height: 110%;
+    background-color: #5d5d5d;
+}
+
+.train-recode-month-2{
+    font-size: 2rem;
+    margin-top: 190px;
+    color: #fff;
+}
+
+.train-recode-month-3{
+    color: #fff;
+}
+
+.train-recode-row-parant-child{
+    width: 800px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 270px;
+    margin-right: auto;
+}
+
+.train-recode-row-child-child{
+    width: 100px;
+    height: 100px;
+    float: left;
+    border: 1px solid #000;
+    border-top: none;
+    border-left: none;
+    margin-top: 1px;
+    margin-left: 1px;
+    background-color: #edf2fa;
+    color: #000;
+    text-align: left;
+    position: relative;
+}
+
+.train-recode-row-child-child:hover{
+    background-color: #cbd0d6;
+}
+
+.train-trainning-exist{
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    border: none;
+    background-color: blue;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 8px;
+    font-weight: lighter;
+    text-align: center;
+}
+.train-food-exist{
+    position: absolute;
+    top: 60%;
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    border: none;
+    background-color: red;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 8px;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.train-sleep-exist{
+    position: absolute;
+    top: 80%;
+    left: 10%;
+    width: 80%;
+    height: 10%;
+    border: none;
+    background-color: purple;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 8px;
+    font-weight: lighter;
+    text-align: center;
+}
+
+
+.train-today{
+    background-color: #a0a5ab;
+}
+
+.train-today:hover{
+    background-color: #85898e;
+}
+
+
+.recode-write{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background-color: rgb(0,0,0,0.4);
+}
+
+.recode-write-content{
+    position: fixed;
+    top: 10%;
+    left: 20%;
+    width: 60%;
+    height: 80%;
+    padding: 5px 20px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 20px;
+    border: 1px solid #000;
+    overflow-y: scroll;
+}
+
+
+.recode-content-day{
+    font-size: 18px;
+}
+
+.recode-content-trainning,.recode-content-food,.recode-content-sleep{
+    border: 1px solid #333;
+    border-radius: 10px;
+    margin: 20px 0;
+    padding-bottom: 20px;
+    height: 200px;
+}
+
+.recode-content-trainning p,.recode-content-food p,.recode-content-sleep p{
+    display: none;
+}
+
+.trainning-form,.food-form,.sleep-form{
+    border: none;
+    background-color: #fff !important;
+    width: 95%;
+    font-size: 22px;
+    outline: none;
+    margin-top: 10px;
+}
   @media(max-width:980px){
     #profile{
         width: 250px;

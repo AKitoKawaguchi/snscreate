@@ -29,6 +29,10 @@
  html,body{
     height: 100%;
  }
+
+ textarea{
+   resize: none;
+ }
  header{
     position: fixed;
     top:0;
