@@ -27,6 +27,79 @@
       <p>プロフィール</p>
       <%=form.text_area :profile, value:"#{@user.profile}", placeholder:"プロフィールを追加", class:"edit-profile-form"%>
     </div>
+    <div class="edit-user-setting">
+      <div class="edit-user-setting-top">
+       <p>他のユーザーへの設定</p>
+      </div>
+      <div class="edit-user-setting-content">
+        <div class="edit-user-setting_sec">
+          <div class="edit-user-setting-post-top">
+            投稿
+          </div>
+          <div class="edit-user-setting-choice">
+            <div class="edit-user-setting-choice_frac">
+              <%=form.radio_button :setting_1, 1,checked: true%>
+              <%=form.label :setting_1 ,"表示",value: 1%>
+            </div>
+            <div class="edit-user-setting-choice_frac">
+              <%=form.radio_button :setting_1, 0,checked: false%>
+              <%= form.label :setting_1 ,"非表示",value: 0%>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="edit-user-setting-content">
+        <div class="edit-user-setting_sec">
+          <div class="edit-user-setting-post-top">
+            コメント
+          </div>
+          <div class="edit-user-setting-choice">
+            <div class="edit-user-setting-choice_frac">
+              <%=form.radio_button :setting_2, 1,checked: true%>
+              <%=form.label :setting_2 ,"表示",value: 1%>
+            </div>
+            <div class="edit-user-setting-choice_frac">
+              <%=form.radio_button :setting_2, 0,checked: false%>
+              <%= form.label :setting_2 ,"非表示",value: 0%>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="edit-user-setting-content">
+        <div class="edit-user-setting_sec">
+          <div class="edit-user-setting-post-top">
+            いいね
+          </div>
+          <div class="edit-user-setting-choice">
+            <div class="edit-user-setting-choice_frac">
+              <%=form.radio_button :setting_3, 1,checked: true%>
+              <%=form.label :setting_3 ,"表示",value: 1%>
+            </div>
+            <div class="edit-user-setting-choice_frac">
+              <%=form.radio_button :setting_3, 0,checked: false%>
+              <%= form.label :setting_3 ,"非表示",value: 0%>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="edit-user-setting-content">
+        <div class="edit-user-setting_sec">
+          <div class="edit-user-setting-post-top">
+            トレーニングカレンダー
+          </div>
+          <div class="edit-user-setting-choice">
+            <div class="edit-user-setting-choice_frac">
+              <%=form.radio_button :setting_4, 1,checked: true%>
+              <%=form.label :setting_4 ,"表示",value: 1%>
+            </div>
+            <div class="edit-user-setting-choice_frac">
+              <%=form.radio_button :setting_4, 0,checked: false%>
+              <%= form.label :setting_4 ,"非表示",value: 0%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   <% end %>
   </div>
 </div>
@@ -266,13 +339,19 @@
       </div>
       <div class="post-new">
     <div class="post-new-index">
-      <i class="fa fa-lg fa-times"></i>
-      <%=form_with url: "/main/create" do |form|%>
-        <div class="post-flex">
-          <%=image_tag "/user_images/#{@current_user.image_name}", size: "40x40", style: "object-fit:cover; border-radius: 40px;"%>
-          <%=form.text_area :content%>
+      <div class="post-new-index-top">
+        <div class="xmark">
+          <i class="fa fa-lg fa-xmark"></i>
         </div>
-        <%=form.button "投稿する"%>
+      </div>
+      <div class="post-new-index-content">
+        <%=form_with url: "/main/create" do |form|%>
+          <div class="post-flex">
+            <%=image_tag "/user_images/#{@current_user.image_name}", size: "60x60", style: "object-fit:cover; border-radius: 60px;"%>
+            <%=form.text_area :content%>
+          </div>
+      </div>
+        <%=form.button "投稿する", class:"post-new-submit"%>
       <% end %>
     </div>
   </div>
@@ -288,6 +367,33 @@
       },function(){
         $(this).removeClass("gray");
       });
+
+      if(<%=@user.id%> !== <%=@current_user.id%>){
+        if(<%=(@user.setting/1000)%10%> === 1){
+          $(".posts-mypage-item-post").addClass("white");
+        }else if(<%=(@user.setting/100)%10%> === 1){
+          $(".posts-mypage-item-reply").addClass("white");
+          $(".overflow-reply").removeClass("none");
+        }else if(<%=(@user.setting/10)%10%> === 1){
+          $(".posts-mypage-item-like").addClass("white");
+          $(".overflow-fav").removeClass("none");
+        }
+        if(<%=(@user.setting/1000)%10%> === 0){
+          $(".posts-mypage-item-post").css("display","none")
+          $(".overflow-post").css("display","none");
+        }
+        if(<%=(@user.setting/100)%10%> === 0){
+          $(".posts-mypage-item-reply").css("display","none")
+          $(".overflow-reply").css("display","none");
+        }
+        if(<%=(@user.setting/10)%10%> === 0){
+          $(".posts-mypage-item-like").css("display","none")
+          $(".overflow-fav").css("display","none");
+        }
+        if(<%=(@user.setting/1)%10%> === 0){
+          $(".train").css("display","none");
+        }
+      }
       $(".posts-mypage-item-post").addClass("white");
       $(".posts-mypage-item-reply").on("click",function(){
         $(this).addClass("white");
@@ -530,7 +636,7 @@
       $(".post-new").fadeIn();
     })
 
-    $(".fa-times").on("click",function(){
+    $(".fa-xmark").on("click",function(){
       $(".post-new").fadeOut();
     })
     })

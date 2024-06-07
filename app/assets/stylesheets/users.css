@@ -191,6 +191,37 @@
     font-weight: bold;
     font-size: 18px;
 }
+
+.edit-user-setting-top{
+    border-top: 1px solid #d5dce4;
+}
+.edit-user-setting-top p{
+    font-size: 22px;
+    color: #000;
+    text-align: left;
+}
+
+.edit-user-setting-content{
+    margin-bottom: 30px;
+}
+.edit-user-setting_sec{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-user-setting-choice{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-user-setting-choice_frac{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 30px;
+}
 .mypage-wrap{
     flex-flow: row;
     align-items: center;
@@ -314,11 +345,12 @@
 
 label{
     display: block;
-    margin-top: 10px;
 }
 
 .choice{
+    display: flex;
     margin-left: 31.5px;
+    flex-direction: row;
 }
 
 .posts-mypage-post,.posts-mypage-reply,.posts-mypage-like{
@@ -335,7 +367,7 @@ label{
 
 .posts-mypage-item-post,.posts-mypage-item-reply,.posts-mypage-item-like{
     float: left;
-    width: 33.3%;
+    width: 100%;
     padding: 20px 0px;
     margin: 0px 0px;
     background-color: rgb(230, 228, 228);

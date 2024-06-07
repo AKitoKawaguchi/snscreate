@@ -143,9 +143,9 @@
     position: relative;
     margin: 100px auto;
     background-color: white;
-    padding: 30px 20px 10px;
+    padding: 20px 5px 20px;
     border-radius: 10px;
-    width: 450px;
+    width: 650px;
     height: auto;
 }
 
@@ -153,6 +153,25 @@
     border: none;
     resize: none;
     margin: 0px;
+}
+
+#content{
+    width: 90%;
+    height: 150px;
+    font-size: 18px;
+    outline: none;
+}
+
+.post-new-index-top{
+    position: relative;
+    padding: 0 2rem;
+    width: 100%;
+}
+
+.post-new-index-content{
+    border-bottom: 1px solid#c1ced7;
+    width: 85%;
+    margin: 0 auto;
 }
 
 .post-new-index button{
@@ -168,9 +187,13 @@
 
 .post-flex{
     display: flex;
-    gap:10px;
-    justify-content: center;
+    gap:20px;
+    justify-content: space-between;
     align-items: start;
+}
+
+.post-new-submit:hover{
+    background-color: rgb(28, 141, 217);
 }
 
 .comment-flex{
@@ -221,8 +244,8 @@
 }
 .fa-times {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 0;
+    left: 18px;
     color: rgba(128, 128, 128, 0.46);
     cursor: pointer;
 }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_05_034258) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_07_042852) do
   create_table "favs", force: :cascade do |t|
     t.integer "follow"
     t.integer "follower"
@@ -83,6 +83,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_05_034258) do
     t.string "password"
     t.string "image_name"
     t.text "profile"
+    t.integer "setting", default: 31111
     t.index ["email"], name: "index_users_on_email"
   end
 

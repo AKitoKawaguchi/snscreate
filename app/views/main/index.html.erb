@@ -48,13 +48,19 @@
   <% end %>
   <div class="post-new">
     <div class="post-new-index">
-      <i class="fa fa-lg fa-times"></i>
-      <%=form_with url: "/main/create" do |form|%>
-        <div class="post-flex">
-          <%=image_tag "/user_images/#{@current_user.image_name}", size: "40x40", style: "object-fit:cover; border-radius: 40px;"%>
-          <%=form.text_area :content%>
+      <div class="post-new-index-top">
+        <div class="xmark">
+          <i class="fa fa-lg fa-xmark"></i>
         </div>
-        <%=form.button "投稿する"%>
+      </div>
+      <div class="post-new-index-content">
+        <%=form_with url: "/main/create" do |form|%>
+          <div class="post-flex">
+            <%=image_tag "/user_images/#{@current_user.image_name}", size: "60x60", style: "object-fit:cover; border-radius: 60px;"%>
+            <%=form.text_area :content%>
+          </div>
+      </div>
+        <%=form.button "投稿する", class:"post-new-submit"%>
       <% end %>
     </div>
   </div>
@@ -85,7 +91,7 @@
       $(".post-new").fadeIn();
     })
 
-    $(".fa-times").on("click",function(){
+    $(".fa-xmark").on("click",function(){
       $(".post-new").fadeOut();
     })
     });

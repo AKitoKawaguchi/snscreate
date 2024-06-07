@@ -32,6 +32,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     @user.name = params[:name]
     @user.profile = params[:profile]
+    @user.setting = [3,params[:setting_1],params[:setting_2],params[:setting_3],params[:setting_4]].join.to_i
     if @user.profile == ""
       @user.profile = nil
     end
@@ -93,6 +94,15 @@ class UsersController < ApplicationController
   end
   
   def train_form
+    if params[:trainnig] == ""
+      params[:trainnig] = nil
+    end
+    if params[:food] == ""
+      params[:food] = nil
+    end
+    if params[:sleep] == ""
+      params[:sleep] = nil
+    end
     if @recode = Trainrecode.find_by(date: params[:date].to_i)
       @recode.update(
         user_id: params[:id],

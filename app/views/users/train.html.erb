@@ -88,7 +88,7 @@
           <% if trainrecode.trainnig%>
             $(`.train-recode-row .train-recode-row-parant-child:nth-child(${row+1}) .train-recode-row-child-child:nth-child(${column})`).append("<div class='train-trainning-exist'>トレーニング</div>");
           <% end%>
-          <% if trainrecode.food%>
+          <% if trainrecode.food &&%>
             $(`.train-recode-row .train-recode-row-parant-child:nth-child(${row+1}) .train-recode-row-child-child:nth-child(${column})`).append("<div class='train-food-exist'>食事</div>");
           <% end%>
           <% if trainrecode.sleep%>
