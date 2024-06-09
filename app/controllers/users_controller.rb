@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :ensure_user_id,{only:[:mypage,:delete]}
   before_action :delete_user_id,{only:[:mypage]}
-  before_action :ensure_correct_user,{only:[:update,:train,:train_form,:delete]}
+  before_action :ensure_correct_user,{only:[:update,:train_form,:delete]}
   before_action :ensure_train_user,{only:[:train_edit,:train_destroy,:recode_edit]}
 
 
