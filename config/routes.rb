@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "users/:id/train" => "users#train"
   get 'main/index' => "main#index"
   post "main/create" => "main#create"
   get "main/:id" => "main#show"
@@ -17,7 +18,6 @@ Rails.application.routes.draw do
   post "users/create" => "users#create"
   get "users/:id" => "users#mypage"
   post "users/:id/update" => "users#update"
-  get "users/:id/train" => "users#train"
   post "users/:id/train_form" => "users#train_form"
   get "users/:recode_id/train_edit" => "users#train_edit"
   post "users/:recode_id/recode_edit" => "users#recode_edit"
