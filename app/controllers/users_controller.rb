@@ -179,11 +179,7 @@ class UsersController < ApplicationController
   end
 
   def ensure_correct_user
-    puts session[:user_id]
-    puts @current_user.id.class
-    puts params[:id].class
-    puts params[:id].to_i
-    if @current_user.id != params[:id].to_i
+    if @current_user.id != params[:id]
       flash[:notice] = "権限がありません"
       redirect_to("/main/index")
     end
