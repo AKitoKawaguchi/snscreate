@@ -20,7 +20,7 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config
+    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -43,7 +43,7 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq
-RUN apt-get install -y build-essential git libvips pkg-config 
+RUN apt-get install -y build-essential git libpq-dev libvips pkg-config 
 RUN rm -rf /var/lib/apt/lists /var/cache/apt/archives
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
 
