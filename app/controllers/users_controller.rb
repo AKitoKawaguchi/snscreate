@@ -179,6 +179,7 @@ class UsersController < ApplicationController
   end
 
   def ensure_correct_user
+    puts User.columns.hash["id"].type
     if @current_user.id != params[:id]
       flash[:notice] = "権限がありません"
       redirect_to("/main/index")
