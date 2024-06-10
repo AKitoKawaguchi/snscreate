@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  self.primary_key = "id"
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
   has_many :trainrecodes , class_name: "Trainrecode", foreign_key: "user_id", dependent: :destroy

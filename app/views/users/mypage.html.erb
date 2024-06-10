@@ -368,7 +368,7 @@
         $(this).removeClass("gray");
       });
 
-      if(<%=@user.id%> !== <%=@current_user.id%>){
+      if(<%=@user.id.gsub("-","") != @current_user.id.gsub("-","")%>){
         if(<%=(@user.setting/1000)%10%> === 1){
           $(".posts-mypage-item-post").addClass("white");
         }else if(<%=(@user.setting/100)%10%> === 1){

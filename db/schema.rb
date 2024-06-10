@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_07_042852) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_10_071026) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "favs", force: :cascade do |t|
-    t.integer "follow"
-    t.integer "follower"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "follow"
+    t.uuid "follower"
   end
 
   create_table "hashtag_posts", force: :cascade do |t|
@@ -38,21 +39,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_07_042852) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "user_id"
     t.integer "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.integer "visitor_id", null: false
-    t.integer "visited_id", null: false
     t.integer "comment_id"
     t.string "action", default: "", null: false
     t.boolean "checked", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "like_id"
+    t.uuid "visitor_id", null: false
+    t.uuid "visited_id", null: false
     t.index ["comment_id"], name: "index_notifications_on_comment_id"
     t.index ["visited_id"], name: "index_notifications_on_visited_id"
     t.index ["visitor_id"], name: "index_notifications_on_visitor_id"
@@ -63,21 +65,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_07_042852) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "like"
-    t.integer "user_id"
     t.integer "tocomment"
+    t.uuid "user_id", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "trainrecodes", force: :cascade do |t|
-    t.integer "user_id", null: false
     t.text "trainnig"
     t.text "food"
     t.text "sleep"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "date"
+    t.uuid "user_id", null: false
+    t.index ["user_id"], name: "index_trainrecodes_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
@@ -91,4 +95,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_07_042852) do
 
   add_foreign_key "hashtag_posts", "hashtags"
   add_foreign_key "hashtag_posts", "posts"
+  add_foreign_key "likes", "users"
+  add_foreign_key "notifications", "users", column: "visited_id"
+  add_foreign_key "notifications", "users", column: "visitor_id"
+  add_foreign_key "posts", "users"
+  add_foreign_key "trainrecodes", "users"
 end
