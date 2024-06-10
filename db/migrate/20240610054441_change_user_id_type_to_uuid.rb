@@ -9,7 +9,7 @@ class ChangeUserIdTypeToUuid < ActiveRecord::Migration[7.1]
 
     execute <<~SQL
       UPDATE likes SET user_uuid = users.uuid
-      FROM users WHERE likes.user_id = users.id;
+      FROM users WHERE likes.user_id = users.id::varchar;
       UPDATE notifications SET visitor_uuid = users.uuid
       FROM users WHERE notifications.visitor_id = users.id;
       UPDATE notifications SET visited_uuid = users.uuid
