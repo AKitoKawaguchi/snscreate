@@ -381,17 +381,42 @@
         if(<%=(@user.setting/1000)%10%> === 0){
           $(".posts-mypage-item-post").css("display","none")
           $(".overflow-post").css("display","none");
+          $("#setting_1_1").checked = false;
+          $("#setting_1_0").checked = ture;
         }
         if(<%=(@user.setting/100)%10%> === 0){
           $(".posts-mypage-item-reply").css("display","none")
           $(".overflow-reply").css("display","none");
+          $("#setting_2_1").prop("checked",false);
+          $("#setting_2_0").prop("checked",true);
         }
         if(<%=(@user.setting/10)%10%> === 0){
           $(".posts-mypage-item-like").css("display","none")
           $(".overflow-fav").css("display","none");
+          $("#setting_3_1").checked = false;
+          $("#setting_3_0").checked = ture;
         }
         if(<%=(@user.setting/1)%10%> === 0){
           $(".train").css("display","none");
+          $("#setting_4_1").checked = false;
+          $("#setting_4_0").checked = ture;
+        }
+      }else{
+        if(<%=(@user.setting/1000)%10%> === 0){
+          $("#setting_1_1").prop("checked",false);
+          $("#setting_1_0").prop("checked",true);
+        }
+        if(<%=(@user.setting/100)%10%> === 0){
+          $("#setting_2_1").prop("checked",false);
+          $("#setting_2_0").prop("checked",true);
+        }
+        if(<%=(@user.setting/10)%10%> === 0){
+          $("#setting_3_1").prop("checked",false);
+          $("#setting_3_0").prop("checked",true);
+        }
+        if(<%=(@user.setting/1)%10%> === 0){
+          $("#setting_4_1").prop("checked",false);
+          $("#setting_4_0").prop("checked",true);
         }
       }
       $(".posts-mypage-item-post").addClass("white");
@@ -450,6 +475,7 @@
             window.location.href = `/main/${post.id}`
         }
     });
+
 
     $(".fa-gear").on("click",function(){
       $(".main-edit").css("display","block");

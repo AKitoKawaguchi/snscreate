@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_10_071026) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_10_123922) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -23,10 +23,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_10_071026) do
   end
 
   create_table "hashtag_posts", force: :cascade do |t|
-    t.bigint "post_id", null: false
     t.bigint "hashtag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "post_id", null: false
     t.index ["hashtag_id"], name: "index_hashtag_posts_on_hashtag_id"
     t.index ["post_id"], name: "index_hashtag_posts_on_post_id"
   end
@@ -39,15 +39,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_10_071026) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id", null: false
+    t.uuid "post_id", null: false
+    t.index ["post_id"], name: "index_likes_on_post_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.integer "comment_id"
     t.string "action", default: "", null: false
     t.boolean "checked", default: false, null: false
     t.datetime "created_at", null: false
@@ -55,12 +55,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_10_071026) do
     t.integer "like_id"
     t.uuid "visitor_id", null: false
     t.uuid "visited_id", null: false
+    t.uuid "comment_id", null: false
     t.index ["comment_id"], name: "index_notifications_on_comment_id"
     t.index ["visited_id"], name: "index_notifications_on_visited_id"
     t.index ["visitor_id"], name: "index_notifications_on_visitor_id"
   end
 
-  create_table "posts", force: :cascade do |t|
+  create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -95,7 +96,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_10_071026) do
 
   add_foreign_key "hashtag_posts", "hashtags"
   add_foreign_key "hashtag_posts", "posts"
+  add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
+  add_foreign_key "notifications", "posts", column: "comment_id"
   add_foreign_key "notifications", "users", column: "visited_id"
   add_foreign_key "notifications", "users", column: "visitor_id"
   add_foreign_key "posts", "users"
