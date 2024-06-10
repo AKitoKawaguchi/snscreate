@@ -1,7 +1,6 @@
 class FavsController < ApplicationController
     def follow
         @user = User.find_by(id:params[:user_id])
-        puts @current_user.id
         @fav = Fav.new(
             follow:@current_user.id,
             follower:params[:user_id]
