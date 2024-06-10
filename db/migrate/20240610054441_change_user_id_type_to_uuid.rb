@@ -11,13 +11,13 @@ class ChangeUserIdTypeToUuid < ActiveRecord::Migration[7.1]
       UPDATE likes SET user_uuid = users.uuid
       FROM users WHERE likes.user_id = users.id::integer;
       UPDATE notifications SET visitor_uuid = users.uuid
-      FROM users WHERE notifications.visitor_id = users.id;
+      FROM users WHERE notifications.visitor_id = users.id::integer;
       UPDATE notifications SET visited_uuid = users.uuid
-      FROM users WHERE notifications.visited_id = users.id;
+      FROM users WHERE notifications.visited_id = users.id::integer;
       UPDATE posts SET user_uuid = users.uuid
-      FROM users WHERE posts.user_id = users.id;
+      FROM users WHERE posts.user_id = users.id::integer;
       UPDATE trainrecodes SET user_uuid = users.uuid
-      FROM users WHERE trainrecodes.user_id = users.id;
+      FROM users WHERE trainrecodes.user_id = users.id::integer;
     SQL
 
     remove_column :likes, :user_id
